@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { Button, Input } from "@mantine/core";
+import React from 'react';
+import styled from 'styled-components';
+import { Button, Input } from '@mantine/core';
 
 export const Wrapper = styled.div`
   margin: 30px auto;
