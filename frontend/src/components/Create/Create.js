@@ -37,6 +37,7 @@ const Create = ({ getWriting }) => {
     getWriting(data);
   };
   return (
+    // 글작성 후 글목록으로 넘겨야하는 부분 수정 필요
     <CreateContainer>
       <form onSubmit={(e) => onSubmitWriting(e)}>
         <CreateTitleInput type="text" placeholder="제목" />
