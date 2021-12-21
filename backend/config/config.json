@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "tlqkzhdls1!",
+    "database": "blockchain",
+    "host": "user.c2hu51qldf3x.ap-northeast-2.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "admin",
+    "password": "tlqkzhdls1!",
+    "database": "database_test",
+    "host": "user.c2hu51qldf3x.ap-northeast-2.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
