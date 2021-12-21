@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { Button, Input } from "@mantine/core";
+import React from 'react';
+import styled from 'styled-components';
+import { Button, Input } from '@mantine/core';
 
 export const Wrapper = styled.div`
   margin: 30px auto;
@@ -22,9 +22,6 @@ const Register = () => {
     justify-content: center;
     height: calc(100vh - 101px);
   `;
-<<<<<<< HEAD
-  return <RegisterContainer>회원가입</RegisterContainer>;
-=======
 
   return (
     <RegisterContainer>
@@ -35,7 +32,6 @@ const Register = () => {
       </Wrapper>
     </RegisterContainer>
   );
->>>>>>> 21e18cd2d1138161848b59ceaa8b5051d1757a9c
 };
 
 export default Register;
