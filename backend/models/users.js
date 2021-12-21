@@ -26,11 +26,16 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING(255),
         allowNull: true,
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        field: "created_at",
+      },
     },
     {
       sequelize,
       tableName: "users",
-      timestamps: false,
+      timestamps: true,
+      updatedAt: false,
       indexes: [
         {
           name: "PRIMARY",
