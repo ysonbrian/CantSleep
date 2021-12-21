@@ -1,11 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import { CButton, CInput, Wrapper } from "../Register/Register";
 const Login = () => {
   const LoginContainer = styled.div`
     display: flex;
     justify-content: center;
   `;
-  return <LoginContainer>로그인 페이지</LoginContainer>;
+  return (
+    <LoginContainer>
+      <Wrapper>
+        <CInput variant="default" placeholder="ID" />
+        <CInput variant="default" placeholder="Password" />
+        <CButton variant="light">로그인</CButton>
+      </Wrapper>
+    </LoginContainer>
+  );
 };
 
 export default Login;
