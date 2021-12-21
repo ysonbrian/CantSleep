@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import Create from './components/Create/Create';
+import Login from './components/Login/Login';
+import Main from './components/Main/Main';
+import MainListItem from './components/Main/MainListItem';
+import Nav from './components/Nav/Nav';
+import Register from './components/Register/Register';
 
 function App() {
+  const [writingList, setWritingList] = useState([]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Nav />
+      <Routes>
+        <Route exact path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/create" element={<Create />} />
+        <Route path="/:id" element={<MainListItem />} />
+      </Routes>
+    </Router>
   );
 }
 
