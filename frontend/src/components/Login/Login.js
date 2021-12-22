@@ -31,15 +31,16 @@ const Login = (props) => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (user?.username) {
       navigate("/");
     }
   }, [user]);
 
   return (
     <LoginContainer>
-      {!user && (
+      {!user?.username && (
         <Wrapper>
+          {console.log(user.username)}
           <CInput
             onChange={(e) => setUsername(e.target.value)}
             variant="default"
