@@ -2,19 +2,20 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-require('dotenv').config();
-const db = require('./models');
-const lightwallet = require('eth-lightwallet')
+require("dotenv").config();
+const db = require("./models");
+const lightwallet = require("eth-lightwallet");
 const Web3 = require("web3");
 const web3 = new Web3("HTTP://127.0.0.1:7545");
 const { User, Users } = require("./models");
 var jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { checkRegisterValidation } = require("./middlewares");
-const saltRounds = 10;
 
 const Login = require('./routes/loginRouter');
 const Facuet = require('./routes/sendEtherRouter')
+const testRouter = require("./routes/test");
+
 
 const options = {
   host: process.env.DB_HOST,
@@ -33,13 +34,10 @@ const options = {
 //   })
 // );
 
-
-const SECRET = process.env.TOKEN_SECRET;
-
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 //app.use('/',Login);
 
 
@@ -55,7 +53,13 @@ app.use(express.urlencoded({ extended: false }));
 
 
 
+app.use('/ethFaucet',Facuet)
+app.use("/", Login);
+app.use("/test", testRouter);
 
+
+//db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
+// ex)findAll,
 
 //db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
 // ex)findAll,
@@ -65,6 +69,7 @@ db.sequelize.sync().then(() => {
     console.log("DB연결 성공 및 port구동중");
   });
 });
+
 
 
 app.post("/register", checkRegisterValidation, async (req, res) => {
@@ -140,14 +145,6 @@ app.post("/login", async (req, res) => {
 
 
 
-app.use('/ethFaucet',Facuet)
 
-app.get('/',async(req,res)=>{
-    const user = await User.findAll({
-        raw: true,
-    })
 
-    console.log(user[0].userName);
-  
-})
 
