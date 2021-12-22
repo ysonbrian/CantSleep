@@ -15,6 +15,7 @@ const { checkRegisterValidation } = require("./middlewares");
 const Login = require('./routes/loginRouter');
 const Facuet = require('./routes/sendEtherRouter')
 const testRouter = require("./routes/test");
+const contentsRouter = require("./routes/contentsRouter");
 
 
 const options = {
@@ -54,6 +55,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.use('/ethFaucet',Facuet)
+app.use('/contents',contentsRouter)
 app.use("/", Login);
 app.use("/test", testRouter);
 
