@@ -8,7 +8,7 @@ const Create = ({ getWriting }) => {
   const [writingId, setWritingId] = useState(1);
   const CreateContainer = styled.div`
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 100%;
