@@ -1,28 +1,32 @@
 'use strict';
 module.exports = (sequelize, DataTypes) =>{
   return sequelize.define('user',{
-     name:{
-          type: DataTypes.STRING(20),
-          allowNull: false,
+     userName:{
+          type: DataTypes.STRING(255),
+          allowNull: true,
           unique: true,
      },
-     age:{
-         type: DataTypes.INTEGER.UNSIGNED,
-         allowNull: false,
-     },
-     married:{
-         type: DataTypes.BOOLEAN,
-         allowNull: false,
-     },
-     comment:{
-         type: DataTypes.TEXT,
+     password:{
+         type: DataTypes.STRING(255),
          allowNull: true,
      },
      created_at:{
          type: DataTypes.DATE,
-         allowNull: false,
+         allowNull: true,
          defaultValue: DataTypes.NOW,
      },
+     address:{
+      type: DataTypes.STRING(255),
+      allowNull: true,
+  },
+  privateKey:{
+      type: DataTypes.STRING(255),
+      allowNull: true,
+  },
+  mnemonicWord:{
+    type: DataTypes.STRING(255),
+    allowNull: true,
+},
   },{
       timestamps: false,
   });
