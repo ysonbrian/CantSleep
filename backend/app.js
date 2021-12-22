@@ -11,9 +11,9 @@ const { User, Users } = require("./models");
 var jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { checkRegisterValidation } = require("./middlewares");
-const saltRounds = 10;
 
 const Login = require("./routes/login");
+const testRouter = require("./routes/test");
 
 const options = {
   host: process.env.DB_HOST,
@@ -32,12 +32,11 @@ const options = {
 //   })
 // );
 
-const SECRET = process.env.TOKEN_SECRET;
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/", Login);
+app.use("/test", testRouter);
 
 //db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
 // ex)findAll,
@@ -48,56 +47,5 @@ app.use("/", Login);
 db.sequelize.sync().then(() => {
   app.listen(1234, (err, res) => {
     console.log("DB연결 성공 및 port구동중");
-  });
-});
-
-app.post("/register", checkRegisterValidation, async (req, res) => {
-  const { username, password } = req.body;
-
-  bcrypt.hash(password, saltRounds, async (err, hash) => {
-    try {
-      await User.create({
-        userName: username,
-        password: hash,
-      });
-      res.status(200).json({ message: "회원가입 성공" });
-    } catch (e) {
-      res.status(400).json({ message: "회원가입 실패" });
-    }
-  });
-});
-
-app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  console.log(username);
-  const user = await User.findOne({
-    where: {
-      userName: username,
-    },
-  });
-
-  if (!user) {
-    return res
-      .status(404)
-      .json({ message: "입력하신 Username은 존재하지 않습니다." });
-  }
-
-  const passwordIsValid = bcrypt.compareSync(password, user.password);
-
-  if (!passwordIsValid) {
-    return res.status(401).json({
-      accessToken: null,
-      message: "Username 또는 Password를 잘못입력하셨습니다.",
-    });
-  }
-
-  const token = jwt.sign({ username: user.userName }, SECRET, {
-    expiresIn: 86400, // 24 hours
-  });
-
-  res.status(200).json({
-    username: user.userName,
-    accessToken: token,
-    address: user.address,
   });
 });

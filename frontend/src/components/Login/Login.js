@@ -10,7 +10,7 @@ const Login = () => {
     <LoginContainer>
       <Wrapper>
         <CInput variant="default" placeholder="ID" />
-        <CInput variant="default" placeholder="Password" />
+        <CInput variant="default" type="password" placeholder="Password" />
         <CButton variant="light">로그인</CButton>
       </Wrapper>
     </LoginContainer>
