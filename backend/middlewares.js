@@ -2,6 +2,7 @@ const { User, Users } = require("./models");
 
 const checkRegisterValidation = async (req, res, next) => {
   const { username, password } = req.body;
+  console.log("checkRegisterValidation");
   console.log(username, password);
   const user = await User.findOne({
     where: {
