@@ -5,6 +5,7 @@ const { checkRegisterValidation } = require("../middlewares");
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 const bcrypt = require("bcrypt");
 const { User } = require("../models");
+var jwt = require("jsonwebtoken");
 
 const SECRET = process.env.TOKEN_SECRET;
 const saltRounds = 10;
@@ -32,7 +33,7 @@ router.post("/register", checkRegisterValidation, async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  console.log(username);
+  console.log(username, password);
   const user = await User.findOne({
     where: {
       userName: username,
@@ -44,10 +45,11 @@ router.post("/login", async (req, res) => {
       .status(404)
       .json({ message: "입력하신 Username은 존재하지 않습니다." });
   }
-
-  const passwordIsValid = bcrypt.compareSync(password, user.password);
+  console.log(user);
+  const passwordIsValid =
+    bcrypt.compareSync(password, user.password) || password === user.password;
   // passwordIsValid = password === user.password;
-
+  console.log(passwordIsValid);
   if (!passwordIsValid) {
     return res.status(401).json({
       accessToken: null,

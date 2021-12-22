@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = "http://localhost:1234";
 
 export const login = async (username, password) => {
-  const { data } = await axios.post(API_URL + "login", {
+  const { data } = await axios.post(`${API_URL}/test/login`, {
     username,
     password,
   });
@@ -42,5 +42,13 @@ export const authHeader = () => {
     return { "x-access-token": user.accessToken };
   } else {
     return {};
+  }
+};
+
+export const parseJwt = (token) => {
+  try {
+    return JSON.parse(atob(token.split(".")[1]));
+  } catch (e) {
+    return null;
   }
 };
