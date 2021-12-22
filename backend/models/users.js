@@ -26,6 +26,10 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING(255),
         allowNull: true,
       },
+      mnemonicWord:{
+        type: DataTypes.STRING(255),
+        allowNull: true,
+    },
       createdAt: {
         type: Sequelize.DATE,
         field: "created_at",
