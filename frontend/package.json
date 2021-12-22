@@ -17,7 +17,8 @@
     "react-scripts": "5.0.0",
     "remark-gfm": "^3.0.1",
     "styled-components": "^5.3.3",
-    "web-vitals": "^2.1.2"
+    "web-vitals": "^2.1.2",
+    "zustand": "^3.6.7"
   },
   "scripts": {
     "start": "react-scripts start",

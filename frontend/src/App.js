@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {
+  unstable_HistoryRouter as HistoryRouter,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
 import './App.css';
 import Create from './components/Create/Create';
 import Login from './components/Login/Login';
@@ -13,10 +18,15 @@ import styled from 'styled-components';
 
 import MainLeft from './image/MainLeft.svg';
 import MainRight from './image/MainRight.svg';
+import { createBrowserHistory } from 'history';
+import { getCurrentUser, logout, parseJwt } from './utils/auth';
+import { useStore } from './utils/store';
 
 function App() {
   const [writingList, setWritingList] = useState([]);
   const [clickedItem, setClickedItem] = useState('');
+  const [user, setUser] = useStore((state) => [state.user, state.setUser]);
+
   const getWriting = (data) => {
     setWritingList((prev) => {
       return [data, ...prev];
@@ -56,8 +66,32 @@ function App() {
       height: 500px;
     }
   `;
+
+  let history = createBrowserHistory();
+  history.listen((location, action) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    // console.log("토큰 만료 검사");
+
+    if (user) {
+      const decodedJwt = parseJwt(user.accessToken);
+
+      if (decodedJwt.exp * 1000 < Date.now()) {
+        logout();
+        setUser({});
+      }
+    }
+  });
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    console.log(user);
+    if (user) {
+      setUser(user);
+    }
+  }, []);
+
   return (
-    <Router>
+    <HistoryRouter history={history}>
       <Nav />
       <AppMainContainer>
         <AppMainLeft>
@@ -83,7 +117,7 @@ function App() {
           <img src={MainRight} alt="" />
         </AppMainRight>
       </AppMainContainer>
-    </Router>
+    </HistoryRouter>
   );
 }
 
