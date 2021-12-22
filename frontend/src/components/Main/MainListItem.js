@@ -10,15 +10,21 @@ const MainListItem = ({ data, onClickedItem }) => {
     align-items: left;
     flex-direction: column;
     width: 100%;
-    height: 100%;
     border: 1px solid black;
     padding: 20px;
     gap: 10px;
-    margin-bottom: 10px;
-
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: #fefefe;
     a {
       text-decoration: none;
       color: black;
+    }
+    :hover {
+      background-color: #05b388;
+      a {
+        color: white;
+      }
     }
   `;
 
