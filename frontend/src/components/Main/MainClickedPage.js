@@ -7,7 +7,7 @@ import { BiArrowBack } from 'react-icons/bi';
 const MainClickedPage = ({ clickedItem }) => {
   const ClickedItemContainer = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     font-size: 1rem;
@@ -20,6 +20,7 @@ const MainClickedPage = ({ clickedItem }) => {
       color: black;
       justify-content: ;
     }
+    background-color: #ffffff;
   `;
 
   const ClickedItemTitle = styled.p`

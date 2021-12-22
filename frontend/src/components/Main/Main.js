@@ -6,12 +6,12 @@ const Main = ({ writingList, onClickedItem }) => {
   console.log(onClickedItem);
   const MainContainer = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     margin-top: 100px;
-    margin-right: 20%;
-    margin-left: 20%;
+    margin: 10px;
+    height: 100vh;
   `;
   const MainHeader = styled.div`
     display: flex;
@@ -19,6 +19,8 @@ const Main = ({ writingList, onClickedItem }) => {
     justify-content: center;
     margin-bottom: 100px;
     font-size: 40px;
+    margin-top: 100px;
+
     p {
       font-size: 40px;
     }
