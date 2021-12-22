@@ -1,4 +1,6 @@
-export const checkRegisterValidation = async (req, res, next) => {
+const { User, Users } = require("./models");
+
+const checkRegisterValidation = async (req, res, next) => {
   const { username, password } = req.body;
   const user = Users.findOne({
     where: {
@@ -14,7 +16,7 @@ export const checkRegisterValidation = async (req, res, next) => {
   next();
 };
 
-export const verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   const token = req.headers["x-access-token"];
 
   if (!token) {
@@ -31,7 +33,7 @@ export const verifyToken = (req, res, next) => {
   });
 };
 
-// module.exports = {
-//   checkRegisterValidation,
-//   verifyToken,
-// };
+module.exports = {
+  checkRegisterValidation,
+  verifyToken,
+};
