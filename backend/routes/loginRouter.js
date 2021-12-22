@@ -43,19 +43,19 @@ router.post("/user", async (req, res) => {
 
             let address = ks.getAddresses().toString();
             let keyStore = ks.serialize();
-
-            User.update(
-              {
-                password: reqPassword,
-                address: address,
-                privateKey: mnemonic,
-              },
-              {
-                where: {
-                  userName: reqUserName,
-                },
+            let prv_key = ks.exportPrivateKey(address, pwDerivedKey);
+          
+  
+            User.update({
+              password: reqPassword,
+              address: address,
+              privateKey: prv_key,
+              mnemonicWord : mnemonic 
+            }, {
+              where: {
+                userName: reqUserName
               }
-            )
+            })
               .then((result) => {
                 // 주소를 보여준다
                 res.json(address);
@@ -86,8 +86,5 @@ router.post("/user", async (req, res) => {
 //   });
 // });
 
-router.get("/login", (req, res) => {
-  console.log(123);
-});
 
 module.exports = router;
