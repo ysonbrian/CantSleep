@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { AiFillEdit, AiFillHome } from "react-icons/ai";
 import logo from "../../image/logo2.svg";
 import { useStore } from "../../utils/store";
+import { logout } from "../../utils/auth";
 const Nav = () => {
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
   const NavContainer = styled.div`
@@ -116,14 +117,24 @@ const Nav = () => {
       <div></div>
       <NavBar>
         <NavInput type="text" placeholder="검색" />
-        {user ? (
+        {user?.username ? (
           user.username
         ) : (
           <Link to="/login">
             <li>로그인</li>
           </Link>
         )}
-        {user ? null : (
+        {user?.username ? (
+          <Link
+            to="/"
+            onClick={() => {
+              logout();
+              setUser({});
+            }}
+          >
+            <li>로그아웃</li>
+          </Link>
+        ) : (
           <Link to="/register">
             <li>회원가입</li>
           </Link>
