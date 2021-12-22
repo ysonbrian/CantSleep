@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { BiArrowBack } from 'react-icons/bi';
 
 const Create = ({ getWriting }) => {
+  let navigate = useNavigate();
   const [writingId, setWritingId] = useState(1);
   const CreateContainer = styled.div`
     display: flex;
@@ -91,6 +92,7 @@ const Create = ({ getWriting }) => {
     };
     setWritingId(writingId + 1);
     getWriting(data);
+    navigate('/');
   };
   return (
     // 글작성 후 글목록으로 넘겨야하는 부분 수정 필요
