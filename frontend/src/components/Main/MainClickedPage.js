@@ -12,8 +12,10 @@ const MainClickedPage = ({ clickedItem }) => {
     flex-direction: column;
     font-size: 1rem;
     line-height: 2.5rem;
+    margin-top: 20px;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    padding: 0 10%;
     a {
       cursor: pointer;
       font-size: 40px;
@@ -26,11 +28,53 @@ const MainClickedPage = ({ clickedItem }) => {
   const ClickedItemTitle = styled.p`
     font-size: 40px;
     padding: 30px;
+    width: 100%;
+    text-align: center;
   `;
 
   const ClickedItemContent = styled.p`
-    font-size: 15px;
+    text-align: left;
+    font-size: 20px;
     padding: 30px;
+    width: 100%;
+  `;
+  const ClickedBackButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    width: 100%;
+    height: 60px;
+  `;
+  const ClickedBackButton = styled.button`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    outline: none;
+    padding: 0px 1.25rem;
+    text-align: center;
+    width: 150px;
+    height: 30px;
+    margin-left: 10px;
+    :hover {
+      background-color: #f4f4f4;
+    }
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: black;
+    }
+
+    p {
+      font-size: 20px;
+    }
   `;
 
   const info = `# ${clickedItem.title}
@@ -48,16 +92,14 @@ const MainClickedPage = ({ clickedItem }) => {
 
   return (
     <ClickedItemContainer>
-      {/* <ReactMarkdown
-        parserOptions={{ commonmark: true }}
-        children={info}
-        remarkPlugins={[remarkGfm]}
-      /> */}
-      <div>
-        <Link to="/">
-          <BiArrowBack position="left" />
-        </Link>
-      </div>
+      <ClickedBackButtonContainer>
+        <ClickedBackButton>
+          <Link to="/">
+            <BiArrowBack size={25} />
+            <p>나가기</p>
+          </Link>
+        </ClickedBackButton>
+      </ClickedBackButtonContainer>
 
       <ClickedItemTitle>{clickedItem.title}</ClickedItemTitle>
       <ClickedItemContent>{clickedItem.content}</ClickedItemContent>

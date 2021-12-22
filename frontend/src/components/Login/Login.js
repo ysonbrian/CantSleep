@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { login } from "../../utils/auth";
-import { CButton, CInput, Wrapper } from "../Register/Register";
-import { useStore } from "../../utils/store";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { login } from '../../utils/auth';
+import { CButton, CInput, Wrapper } from '../Register/Register';
+import { useStore } from '../../utils/store';
 
 const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
 `;
 
 const Login = (props) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
 
@@ -32,7 +35,7 @@ const Login = (props) => {
 
   useEffect(() => {
     if (user?.username) {
-      navigate("/");
+      navigate('/');
     }
   }, [user]);
 

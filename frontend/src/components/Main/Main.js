@@ -9,18 +9,16 @@ const Main = ({ writingList, onClickedItem }) => {
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    margin-top: 100px;
-    margin: 10px;
+    width: 100%;
     height: 100vh;
   `;
   const MainHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 100px;
     font-size: 40px;
-    margin-top: 100px;
-
+    padding: 30px;
+    width: 100%;
     p {
       font-size: 40px;
     }
