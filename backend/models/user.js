@@ -1,3 +1,4 @@
+
 'use strict';
 module.exports = (sequelize, DataTypes) =>{
   return sequelize.define('user',{
@@ -29,5 +30,6 @@ module.exports = (sequelize, DataTypes) =>{
 },
   },{
       timestamps: false,
-  });
+    }
+  );
 };
