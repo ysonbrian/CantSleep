@@ -6,15 +6,8 @@ const db = require("./models");
 const { User, Users } = require("./models");
 var jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { checkRegisterValidation } = require("./middlewares");
 const saltRounds = 10;
-
-const options = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-};
 
 const SECRET = process.env.TOKEN_SECRET;
 
@@ -35,7 +28,7 @@ app.get("/", (req, res) => {
   res.send("1");
 });
 
-app.post("/register", async (req, res) => {
+app.post("/register", checkRegisterValidation, async (req, res) => {
   const { username, password } = req.body;
 
   bcrypt.hash(password, saltRounds, async (err, hash) => {
