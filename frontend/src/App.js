@@ -29,7 +29,8 @@ function App() {
   const AppMainContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background-color: #f4f4f4;
   `;
   const AppMainLeft = styled.div`
@@ -37,6 +38,7 @@ function App() {
     justify-content: center;
     align-items: center;
     padding: 10px;
+    width: 100%;
     img {
       width: 100%;
       height: 500px;
@@ -48,44 +50,40 @@ function App() {
     justify-content: center;
     align-items: center;
     padding: 10px;
+    width: 100%;
     img {
       width: 100%;
       height: 500px;
     }
   `;
   return (
-    <div>
-      <Router>
-        <Nav />
-        <AppMainContainer>
-          <AppMainLeft>
-            <img src={MainLeft} alt="" />
-          </AppMainLeft>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <Main writingList={writingList} onClickedItem={onClickedItem} />
-              }
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/create"
-              element={<Create getWriting={getWriting} />}
-            />
-            <Route
-              path={`/list/${clickedItem.id}`}
-              element={<MainClickedPage clickedItem={clickedItem} />}
-            />
-          </Routes>
-          <AppMainRight>
-            <img src={MainRight} alt="" />
-          </AppMainRight>
-        </AppMainContainer>
-      </Router>
-    </div>
+    <Router>
+      <Nav />
+      <AppMainContainer>
+        <AppMainLeft>
+          <img src={MainLeft} alt="" />
+        </AppMainLeft>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <Main writingList={writingList} onClickedItem={onClickedItem} />
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/create" element={<Create getWriting={getWriting} />} />
+          <Route
+            path={`/list/${clickedItem.id}`}
+            element={<MainClickedPage clickedItem={clickedItem} />}
+          />
+        </Routes>
+        <AppMainRight>
+          <img src={MainRight} alt="" />
+        </AppMainRight>
+      </AppMainContainer>
+    </Router>
   );
 }
 

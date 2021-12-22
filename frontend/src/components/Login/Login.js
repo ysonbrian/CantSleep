@@ -1,10 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import { CButton, CInput, Wrapper } from "../Register/Register";
+import React from 'react';
+import styled from 'styled-components';
+import { CButton, CInput, Wrapper } from '../Register/Register';
 const Login = () => {
   const LoginContainer = styled.div`
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
   `;
   return (
     <LoginContainer>

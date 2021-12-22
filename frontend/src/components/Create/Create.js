@@ -12,22 +12,23 @@ const Create = ({ getWriting }) => {
     align-items: center;
     flex-direction: column;
     width: 100%;
+    height: 100vh;
     padding: 10px;
   `;
   const CreateTitleInput = styled.input`
-    width: 1200px;
+    width: 100%;
     height: 300px;
-    font-size: 50px;
+    font-size: 40px;
     border: none;
     outline: none;
     padding: 10px;
   `;
 
   const CreateTextArea = styled.textarea`
-    width: 1200px;
+    width: 100%;
     height: 300px;
     padding: 10px;
-    font-size: 30px;
+    font-size: 20px;
     border: none;
     outline: none;
   `;
@@ -83,7 +84,6 @@ const Create = ({ getWriting }) => {
 
   const onSubmitWriting = (e) => {
     e.preventDefault();
-    e.stopPropagation();
     let data = {
       id: writingId,
       title: e.target[0].value,
@@ -95,26 +95,17 @@ const Create = ({ getWriting }) => {
     navigate('/');
   };
   return (
-    // 글작성 후 글목록으로 넘겨야하는 부분 수정 필요
     <CreateContainer>
       <form onSubmit={(e) => onSubmitWriting(e)}>
         <CreateTitleInput type="text" placeholder="제목" />
         <br />
         <CreateTextArea
           placeholder="당신의 이야기를 적어보세요..."
-          rows="5"
-          cols="33"
+          rows="80"
+          cols="80"
         />
         <br />
-        {/* <Link
-          data={data}
-          to={{
-            pathname: '/',
-            state: data,
-          }}
-        >
-          <CreateSubmitButton>글작성</CreateSubmitButton>
-        </Link> */}
+
         <CreateButtonContainer>
           <CreateBackButton>
             <Link to="/">
@@ -122,9 +113,7 @@ const Create = ({ getWriting }) => {
               <p>나가기</p>
             </Link>
           </CreateBackButton>
-          {/* <CreateSubmitButton>
-            <Link to="/">글작성</Link>
-          </CreateSubmitButton> */}
+
           <CreateSubmitButton>글작성</CreateSubmitButton>
         </CreateButtonContainer>
       </form>
