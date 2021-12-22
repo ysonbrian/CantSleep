@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { login } from '../../utils/auth';
-import { CButton, CInput, Wrapper } from '../Register/Register';
-import { useStore } from '../../utils/store';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { login } from "../../utils/auth";
+import { CButton, CInput, Wrapper } from "../Register/Register";
+import { useStore } from "../../utils/store";
 
 const LoginContainer = styled.div`
   display: flex;
@@ -14,8 +14,8 @@ const LoginContainer = styled.div`
 `;
 
 const Login = (props) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
 
@@ -35,7 +35,7 @@ const Login = (props) => {
 
   useEffect(() => {
     if (user?.username) {
-      navigate('/');
+      navigate("/");
     }
   }, [user]);
 
@@ -43,7 +43,6 @@ const Login = (props) => {
     <LoginContainer>
       {!user?.username && (
         <Wrapper>
-          {console.log(user.username)}
           <CInput
             onChange={(e) => setUsername(e.target.value)}
             variant="default"
