@@ -1,13 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { AiFillEdit, AiFillHome } from 'react-icons/ai';
-import logo from '../../image/logo2.svg';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { AiFillEdit, AiFillHome } from "react-icons/ai";
+import logo from "../../image/logo2.svg";
+import { useStore } from "../../utils/store";
 const Nav = () => {
+  const [user, setUser] = useStore((state) => [state.user, state.setUser]);
   const NavContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     background-color: #fefefe;
     @media (max-width: 1200px) {
       grid-template-columns: 4fr 1fr 4fr;
@@ -114,12 +116,19 @@ const Nav = () => {
       <div></div>
       <NavBar>
         <NavInput type="text" placeholder="검색" />
-        <Link to="/login">
-          <li>로그인</li>
-        </Link>
-        <Link to="/register">
-          <li>회원가입</li>
-        </Link>
+        {user ? (
+          user.username
+        ) : (
+          <Link to="/login">
+            <li>로그인</li>
+          </Link>
+        )}
+        {user ? null : (
+          <Link to="/register">
+            <li>회원가입</li>
+          </Link>
+        )}
+
         <Link to="/create">
           <li>
             <AiFillEdit size={30} />
