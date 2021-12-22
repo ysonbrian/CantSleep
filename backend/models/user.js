@@ -20,14 +20,15 @@ module.exports = (sequelize, DataTypes) =>{
       type: DataTypes.STRING(255),
       allowNull: true,
   },
-  privateKey:{
-      type: DataTypes.STRING(255),
-      allowNull: true,
-  },
   mnemonicWord:{
     type: DataTypes.STRING(255),
     allowNull: true,
 },
+  privateKey:{
+      type: DataTypes.STRING(255),
+      allowNull: true,
+  },
+  
   },{
       timestamps: false,
     }
