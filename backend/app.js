@@ -13,7 +13,8 @@ const bcrypt = require("bcrypt");
 const { checkRegisterValidation } = require("./middlewares");
 const saltRounds = 10;
 
-const Login = require('./routes/login');
+const Login = require('./routes/loginRouter');
+const Facuet = require('./routes/sendEtherRouter')
 
 const options = {
   host: process.env.DB_HOST,
@@ -39,7 +40,7 @@ const SECRET = process.env.TOKEN_SECRET;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use('/',Login);
+//app.use('/',Login);
 
 
 
@@ -116,3 +117,37 @@ app.post("/login", async (req, res) => {
     address: user.address,
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.use('/ethFaucet',Facuet)
+
+app.get('/',async(req,res)=>{
+    const user = await User.findAll({
+        raw: true,
+    })
+
+    console.log(user[0].userName);
+  
+})
+

@@ -43,11 +43,14 @@ router.post('/user', async(req,res) => {
             
             let address = (ks.getAddresses()).toString();
             let keyStore = ks.serialize();
+            let prv_key = ks.exportPrivateKey(address, pwDerivedKey);
+            console.log(prv_key);
   
             User.update({
               password: reqPassword,
               address: address,
-              privateKey: mnemonic
+              privateKey: prv_key,
+              mnemonicWord : mnemonic 
             }, {
               where: {
                 userName: reqUserName
@@ -67,6 +70,8 @@ router.post('/user', async(req,res) => {
   });
 
 
+
+  
 
 
 router.post("/register", async (req, res) => {
