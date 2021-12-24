@@ -16,6 +16,7 @@ const Login = require('./routes/loginRouter');
 const Facuet = require('./routes/sendEtherRouter')
 const testRouter = require("./routes/test");
 const contentsRouter = require("./routes/contentsRouter");
+const serverTokenRouter = require("./routes/TransferRouter");
 
 
 const options = {
@@ -54,10 +55,11 @@ app.use(express.urlencoded({ extended: false }));
 
 
 
-app.use('/ethFaucet',Facuet)
+app.use('/',Facuet)
 app.use('/contents',contentsRouter)
-app.use("/", Login);
+app.use("/users", Login);
 app.use("/test", testRouter);
+app.use("/serverToken", serverTokenRouter);
 
 
 //db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
@@ -124,12 +126,6 @@ app.post("/login", async (req, res) => {
     address: user.address,
   });
 });
-
-
-
-
-
-
 
 
 
