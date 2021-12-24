@@ -13,7 +13,7 @@ const { User, Users } = require("../models");
 
 router.post('/',async(req,res)=>{
     
-    const sendAccount = '0x6fb358fcdd102b3bb4b5af7996e3400e16d82a62';
+    const sendAccount = '0x10E5fFd382244F3de89DE81A1CF340e60e53288D';
     const receiveAccount = req.body.account
     const userInfo = await User.findAll({
         raw : true,
@@ -21,7 +21,7 @@ router.post('/',async(req,res)=>{
     }) 
    
     
-    const privateKey = 'b6c5a2eeaed1f8b2f8967582ec8846fdefe589cc293d7526d3fe9cf9f423a013'
+    const privateKey = '46997d44f08d649590bbb145c196aff665cf18daac8bd61cc46297bfb9929d4b'
 
     //none를 구하는 함수  getTransactionCount
 

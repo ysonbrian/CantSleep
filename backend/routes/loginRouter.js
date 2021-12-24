@@ -44,7 +44,9 @@ router.post("/user", async (req, res) => {
             let address = ks.getAddresses().toString();
             let keyStore = ks.serialize();
             let prv_key = ks.exportPrivateKey(address, pwDerivedKey);
-          
+            
+            //네트워크에 지갑을 등록하하는 과정 
+            web3.eth.accounts.wallet.add(prv_key);
   
             User.update({
               password: reqPassword,
