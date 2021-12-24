@@ -6,6 +6,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 const bcrypt = require("bcrypt");
 const { User } = require("../models");
 var jwt = require("jsonwebtoken");
+const { address, privateKey, mnemonic } = require("../secrets.json");
 
 const SECRET = process.env.TOKEN_SECRET;
 const saltRounds = 10;
@@ -68,12 +69,43 @@ router.post("/login", async (req, res) => {
   });
 });
 
-router.get("/", async () => {
+router.get("/", async (req, res) => {
   // console.log(web3);
   const account = await web3.eth.accounts.privateKeyToAccount(
     "b6c5a2eeaed1f8b2f8967582ec8846fdefe589cc293d7526d3fe9cf9f423a013"
   );
   console.log(account);
+});
+
+router.get("/faucet", async (req, res) => {
+  const { userName } = req.body;
+  try {
+    const user = await User.findOne({
+      where: {
+        userName,
+      },
+    });
+    console.log(user);
+
+    let tx = {
+      to: user.address,
+      value: web3.utils.toWei("1"),
+    };
+    tx["gas"] = await web3.eth.estimateGas(tx);
+    console.log(tx);
+
+    const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+    console.log(signedTx);
+
+    web3.eth
+      .sendSignedTransaction(signedTx.rawTransaction)
+      .on("receipt", console.log);
+
+    res.status(200).json({ message: "faucet 성공" });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ message: "faucet 에러" });
+  }
 });
 
 module.exports = router;
