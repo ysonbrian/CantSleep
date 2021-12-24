@@ -22,9 +22,12 @@ export const logout = () => {
 export const register = (username, password) => {
   console.log(username, password);
   return axios.post(
-    `${API_URL}/test/register`,
+    // `${API_URL}/test/register`,
+    // {
+    //   username,
+    `${API_URL}/user`,
     {
-      username,
+      userName: username,
       password,
     }
     // { withCredentials: true }
