@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const { User } = require('../models');
 var jwt = require('jsonwebtoken');
 
-const SECRET = process.env.TOKEN_SECRET;
+const SECRET = 'BEB-01-PROJECT-02';
 const saltRounds = 10;
 
 router.post('/register', checkRegisterValidation, async (req, res) => {
@@ -46,6 +46,7 @@ router.post('/login', async (req, res) => {
       .json({ message: '입력하신 Username은 존재하지 않습니다.' });
   }
   console.log(user);
+
   const passwordIsValid =
     bcrypt.compareSync(password, user.password) || password === user.password;
   // passwordIsValid = password === user.password;

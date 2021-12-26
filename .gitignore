@@ -1,3 +1,6 @@
 **/node_modules/*
 .env*
 init-models.js
+**/secrets.json
+**/truffle-config.js
+daemon/test.js
