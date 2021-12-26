@@ -8,8 +8,8 @@ const MainList = ({ writingList, onClickedItem }) => {
   };
   return (
     <>
-      {writingList.map((data) => (
-        <MainListItem data={data} onClickedItem={onClickItem} />
+      {writingList?.map((data) => (
+        <MainListItem key={data.id} data={data} onClickedItem={onClickItem} />
       ))}
     </>
   );

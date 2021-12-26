@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { BiArrowBack } from 'react-icons/bi';
+import axios from 'axios';
+import { writingContent } from '../../utils/data';
+import { useStore } from '../../utils/store';
+import { useData } from '../../utils/store';
 
 const Create = ({ getWriting }) => {
   let navigate = useNavigate();
-  const [writingId, setWritingId] = useState(1);
+  const [user, setUser] = useStore((state) => [state.user, state.setUser]);
+  // const [writing, setWritingList] = useData((state) => state.setWritingList);
   const CreateContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -80,19 +85,22 @@ const Create = ({ getWriting }) => {
     cursor: pointer;
     padding: 0px 1.25rem;
     margin-right: 10px;
+    :hover {
+      opacity: 0.7;
+    }
   `;
 
   const onSubmitWriting = (e) => {
     e.preventDefault();
     let data = {
-      id: writingId,
+      userId: user.username,
       title: e.target[0].value,
       content: e.target[1].value,
       date: new Date().toLocaleString(),
     };
-    setWritingId(writingId + 1);
-    getWriting(data);
+    writingContent(data);
     navigate('/');
+    window.location.reload(false);
   };
   return (
     <CreateContainer>
