@@ -55,7 +55,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 
-app.use('/',Facuet)
+app.use('/ethFaucet',Facuet)
 app.use('/contents',contentsRouter)
 app.use("/users", Login);
 app.use("/test", testRouter);

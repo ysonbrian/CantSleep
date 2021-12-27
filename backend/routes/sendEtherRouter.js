@@ -12,21 +12,25 @@ const { User, Users } = require("../models");
 
 
 router.post('/',async(req,res)=>{
-    
+    //가나슈 게졍 
     const sendAccount = '0x10E5fFd382244F3de89DE81A1CF340e60e53288D';
+    const privateKey = '46997d44f08d649590bbb145c196aff665cf18daac8bd61cc46297bfb9929d4b'
+    //가나슈게졍 
+
+
     const receiveAccount = req.body.account
+
     const userInfo = await User.findAll({
         raw : true,
         where : {address:receiveAccount}
     }) 
    
     
-    const privateKey = '46997d44f08d649590bbb145c196aff665cf18daac8bd61cc46297bfb9929d4b'
+ 
 
     //none를 구하는 함수  getTransactionCount
 
      const nonce = await web3.eth.getTransactionCount(sendAccount,'latest');
-
      const tx = {
         'from': sendAccount,
         'to': receiveAccount,
@@ -36,8 +40,6 @@ router.post('/',async(req,res)=>{
       };
 
     const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
- 
-  
     
   
 
@@ -53,7 +55,7 @@ router.post('/',async(req,res)=>{
                          'userName':userInfo[0].userName,
                          'address':userInfo[0].address,
                          'balance':web3.utils.fromWei(balance,'ether')+"eth",
-                          'txHash':hash
+                         'txHash':hash
                      }
                 }
             );
