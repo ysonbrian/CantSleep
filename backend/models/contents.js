@@ -12,7 +12,6 @@ module.exports = function (sequelize, DataTypes) {
       userId: {
         type: DataTypes.STRING(255),
         allowNull: true,
-        unique: "userName",
       },
       title: {
         type: DataTypes.STRING(255),
@@ -38,12 +37,6 @@ module.exports = function (sequelize, DataTypes) {
           unique: true,
           using: "BTREE",
           fields: [{ name: "id" }],
-        },
-        {
-          name: "userId",
-          unique: true,
-          using: "BTREE",
-          fields: [{ name: "userId" }],
         },
       ],
     }

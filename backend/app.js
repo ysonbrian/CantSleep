@@ -59,6 +59,12 @@ app.use('/serverToken', serverTokenRouter);
 //db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
 // ex)findAll,
 
+app.use('/ethFaucet',Facuet)
+app.use('/contents',contentsRouter)
+app.use("/users", Login);
+app.use("/test", testRouter);
+app.use("/serverToken", serverTokenRouter);
+
 //db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
 // ex)findAll,
 
