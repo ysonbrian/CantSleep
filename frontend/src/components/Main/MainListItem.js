@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const MainListItem = ({ data, onClickedItem }) => {
-  console.log('MainListItem', onClickedItem);
   const MainListItemContainer = styled.div`
     display: flex;
     justify-content: flex-start;
@@ -14,7 +13,7 @@ const MainListItem = ({ data, onClickedItem }) => {
     padding: 20px;
     gap: 10px;
     margin-bottom: 20px;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #fefefe;
     a {
       text-decoration: none;
@@ -30,21 +29,45 @@ const MainListItem = ({ data, onClickedItem }) => {
 
   const MainItemTitle = styled.p`
     font-size: 20px;
-    margin-bottom: 10px;
+    color: #788187;
+    margin-bottom: 5px;
   `;
 
   const MainItemContent = styled.p`
-    font-style: italic;
+    margin-bottom: 5px;
   `;
 
-  const MainItemDate = styled.p`
+  const MainItemDate = styled.span`
     font-style: italic;
+    margin-bottom: 5px;
+  `;
+  const MainItemUser = styled.span`
+    font-size: 20px;
+    margin-bottom: 5px;
   `;
 
   const onClickItem = (data) => {
-    console.log(onClickedItem);
     onClickedItem(data);
   };
+
+  const date = data?.createdAt?.split('T');
+  let rDate = null;
+  if (date) {
+    const newDate = date[0]?.split('-');
+    const newtime = date[1]?.split('.');
+    const newtime2 = newtime[0]?.split(':');
+    const result = [...newDate, ...newtime2];
+    rDate = new Date(
+      Date.UTC(
+        result[0],
+        result[1] - 1,
+        result[2],
+        result[3],
+        result[4],
+        result[5]
+      )
+    ).toLocaleString();
+  }
 
   return (
     <MainListItemContainer onClick={() => onClickItem(data)}>
@@ -55,9 +78,10 @@ const MainListItem = ({ data, onClickedItem }) => {
           state: data,
         }}
       >
+        <MainItemUser>{data.userId}</MainItemUser>
         <MainItemTitle>{data.title}</MainItemTitle>
-        {/* <MainItemContent>{data.content}</MainItemContent> */}
-        <MainItemDate>{data.date}</MainItemDate>
+        <MainItemContent>{data.content}</MainItemContent>
+        <MainItemDate>{date ? rDate : null}</MainItemDate>
       </Link>
     </MainListItemContainer>
   );

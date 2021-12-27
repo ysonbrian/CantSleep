@@ -3,7 +3,6 @@ import MainList from './MainList';
 import styled from 'styled-components';
 
 const Main = ({ writingList, onClickedItem }) => {
-  console.log(onClickedItem);
   const MainContainer = styled.div`
     display: flex;
     justify-content: flex-start;

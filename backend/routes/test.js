@@ -6,9 +6,8 @@ const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 const bcrypt = require("bcrypt");
 const { User } = require("../models");
 var jwt = require("jsonwebtoken");
-const { address, privateKey, mnemonic } = require("../secrets.json");
 
-const SECRET = 'BEB-01-PROJECT-02';
+const SECRET = "BEB-01-PROJECT-02";
 const saltRounds = 10;
 
 router.post("/register", checkRegisterValidation, async (req, res) => {
@@ -59,7 +58,7 @@ router.post("/login", async (req, res) => {
     });
   }
 
-  const token = jwt.sign({ username: user.userName }, SECRET, {
+  const token = jwt.sign({ username: user.userName }, "BEB-01-PROJECT-02", {
     expiresIn: 86400, // 24 hours
   });
 
@@ -70,7 +69,7 @@ router.post("/login", async (req, res) => {
   });
 });
 
-router.get("/", async (req, res) => {
+router.get("/", async () => {
   // console.log(web3);
   const account = await web3.eth.accounts.privateKeyToAccount(
     "b6c5a2eeaed1f8b2f8967582ec8846fdefe589cc293d7526d3fe9cf9f423a013"
