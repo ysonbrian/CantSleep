@@ -62,6 +62,9 @@ app.use('/serverToken', serverTokenRouter);
 //db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
 // ex)findAll,
 
+//db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
+// ex)findAll,
+
 db.sequelize.sync().then(() => {
   app.listen(1234, (err, res) => {
     console.log('DB연결 성공 및 port구동중');
