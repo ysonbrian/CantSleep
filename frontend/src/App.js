@@ -20,12 +20,20 @@ import MainLeft from './image/MainLeft.svg';
 import MainRight from './image/MainRight.svg';
 import { createBrowserHistory } from 'history';
 import { getCurrentUser, logout, parseJwt } from './utils/auth';
-import { useStore } from './utils/store';
+import { getAllUsersWList } from './utils/data';
+import { useStore, useData } from './utils/store';
+
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 function App() {
-  const [writingList, setWritingList] = useState([]);
+  const [writingList, setWritingList] = useData((state) => [
+    state.writingList,
+    state.setWritingList,
+  ]);
   const [clickedItem, setClickedItem] = useState('');
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
+  const [loading, setLoading] = useState(false);
 
   const getWriting = (data) => {
     setWritingList((prev) => {
@@ -67,6 +75,12 @@ function App() {
     }
   `;
 
+  const AppMainMiddle = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+
   let history = createBrowserHistory();
   history.listen((location, action) => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -84,10 +98,21 @@ function App() {
 
   useEffect(() => {
     const user = getCurrentUser();
-    console.log(user);
     if (user) {
       setUser(user);
     }
+    console.log(user);
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      const { data } = await getAllUsersWList();
+      const orderData = data.reverse();
+      setWritingList(orderData);
+      setLoading(false);
+    }
+    fetchData();
   }, []);
 
   return (
@@ -97,22 +122,38 @@ function App() {
         <AppMainLeft>
           <img src={MainLeft} alt="" />
         </AppMainLeft>
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <Main writingList={writingList} onClickedItem={onClickedItem} />
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/create" element={<Create getWriting={getWriting} />} />
-          <Route
-            path={`/list/${clickedItem.id}`}
-            element={<MainClickedPage clickedItem={clickedItem} />}
-          />
-        </Routes>
+        {loading ? (
+          <AppMainMiddle>
+            <Loader
+              type="ThreeDots"
+              color="#000000"
+              height={100}
+              width={100}
+              timeout={3000000}
+            />
+          </AppMainMiddle>
+        ) : (
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <Main writingList={writingList} onClickedItem={onClickedItem} />
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/create"
+              element={<Create getWriting={getWriting} />}
+            />
+            <Route
+              path={`/list/${clickedItem.id}`}
+              element={<MainClickedPage clickedItem={clickedItem} />}
+            />
+          </Routes>
+        )}
+
         <AppMainRight>
           <img src={MainRight} alt="" />
         </AppMainRight>

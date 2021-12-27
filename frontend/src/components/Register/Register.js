@@ -38,7 +38,6 @@ const Register = () => {
     }
 
     const { data, status } = await register(username, password);
-    console.log(data);
     if (status === 200) {
       setUsername('');
       setPassword('');

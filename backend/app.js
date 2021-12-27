@@ -1,22 +1,24 @@
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 const app = express();
 
-require("dotenv").config();
-const db = require("./models");
-const lightwallet = require("eth-lightwallet");
-const Web3 = require("web3");
-const web3 = new Web3("HTTP://127.0.0.1:7545");
-const { User, Users } = require("./models");
-var jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const { checkRegisterValidation } = require("./middlewares");
+require('dotenv').config();
+const db = require('./models');
+const lightwallet = require('eth-lightwallet');
+const Web3 = require('web3');
+const web3 = new Web3('HTTP://127.0.0.1:7545');
+const { User, Users } = require('./models');
+var jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const { checkRegisterValidation } = require('./middlewares');
 
 const Login = require('./routes/loginRouter');
+
 const Facuet = require('./routes/sendEtherRouter')
 const testRouter = require("./routes/test");
 const contentsRouter = require("./routes/contentsRouter");
 const serverTokenRouter = require("./routes/TransferRouter");
+const infoRouter = require('./routes/infoRouter.js');
 
 
 const options = {
@@ -42,11 +44,20 @@ app.use(express.urlencoded({ extended: false }));
 
 //app.use('/',Login);
 
+//db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
+// ex)findAll,
+
+<<<<<<< HEAD
+app.use('/ethFaucet', Facuet);
+app.use('/create', contentsRouter);
+// app.use('/', Login);
+app.use('/test', testRouter);
+app.use('/', infoRouter);
+=======
 
 
-
-//db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다. 
-// ex)findAll, 
+//db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
+// ex)findAll,
 
 
 
@@ -62,6 +73,7 @@ app.use("/test", testRouter);
 app.use("/serverToken", serverTokenRouter);
 
 
+>>>>>>> e81d121e90838552a39acc6a2edb24c087cc84ca
 //db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
 // ex)findAll,
 
@@ -70,13 +82,11 @@ app.use("/serverToken", serverTokenRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(1234, (err, res) => {
-    console.log("DB연결 성공 및 port구동중");
+    console.log('DB연결 성공 및 port구동중');
   });
 });
 
-
-
-app.post("/register", checkRegisterValidation, async (req, res) => {
+app.post('/register', checkRegisterValidation, async (req, res) => {
   const { username, password } = req.body;
 
   bcrypt.hash(password, saltRounds, async (err, hash) => {
@@ -85,14 +95,14 @@ app.post("/register", checkRegisterValidation, async (req, res) => {
         userName: username,
         password: hash,
       });
-      res.status(200).json({ message: "회원가입 성공" });
+      res.status(200).json({ message: '회원가입 성공' });
     } catch (e) {
-      res.status(400).json({ message: "회원가입 실패" });
+      res.status(400).json({ message: '회원가입 실패' });
     }
   });
 });
 
-app.post("/login", async (req, res) => {
+app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   console.log(username);
   const user = await Users.findOne({
@@ -104,7 +114,7 @@ app.post("/login", async (req, res) => {
   if (!user) {
     return res
       .status(404)
-      .json({ message: "입력하신 Username은 존재하지 않습니다." });
+      .json({ message: '입력하신 Username은 존재하지 않습니다.' });
   }
 
   const passwordIsValid = bcrypt.compareSync(password, user.password);
@@ -112,7 +122,7 @@ app.post("/login", async (req, res) => {
   if (!passwordIsValid) {
     return res.status(401).json({
       accessToken: null,
-      message: "Username 또는 Password를 잘못입력하셨습니다.",
+      message: 'Username 또는 Password를 잘못입력하셨습니다.',
     });
   }
 
@@ -126,6 +136,8 @@ app.post("/login", async (req, res) => {
     address: user.address,
   });
 });
+<<<<<<< HEAD
+=======
 
 
 
@@ -146,3 +158,4 @@ app.post("/login", async (req, res) => {
 
 
 
+>>>>>>> e81d121e90838552a39acc6a2edb24c087cc84ca
