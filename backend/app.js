@@ -47,25 +47,6 @@ app.use(express.urlencoded({ extended: false }));
 //db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
 // ex)findAll,
 
-<<<<<<< HEAD
-app.use('/ethFaucet', Facuet);
-app.use('/create', contentsRouter);
-// app.use('/', Login);
-app.use('/test', testRouter);
-app.use('/', infoRouter);
-=======
-
-
-//db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
-// ex)findAll,
-
-
-
-
-
-
-
-
 app.use('/',Facuet)
 app.use('/contents',contentsRouter)
 app.use("/users", Login);
@@ -73,7 +54,11 @@ app.use("/test", testRouter);
 app.use("/serverToken", serverTokenRouter);
 
 
->>>>>>> e81d121e90838552a39acc6a2edb24c087cc84ca
+
+//db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
+// ex)findAll,
+
+
 //db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
 // ex)findAll,
 
@@ -136,10 +121,6 @@ app.post('/login', async (req, res) => {
     address: user.address,
   });
 });
-<<<<<<< HEAD
-=======
-
-
 
 
 
