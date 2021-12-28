@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { submitNFT } from '../../utils/data';
 import styled from 'styled-components';
 import { IconContext } from 'react-icons';
 import { MdOutlineImage } from 'react-icons/md';
+import { create } from 'ipfs-http-client';
+
 const CreateNFT = () => {
   let navigate = useNavigate();
+  const ipfs = create({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+  });
   const [files, setFiles] = useState('');
+  const [imgSrc, setImgSrc] = useState('');
   const Container = styled.div`
     display: flex;
     justify-content: flex-start;
@@ -35,11 +44,32 @@ const CreateNFT = () => {
     position: relative;
     cursor: pointer;
     border-radius: 10px;
-    padding: 20px;
     height: 257px;
     width: 350px;
     :hover {
       background-color: rgb(226, 224, 224);
+    }
+  `;
+
+  const PreviewImage = styled.img`
+    width: 100%;
+    height: 100%;
+    :hover {
+      background-color: transparent;
+    }
+  `;
+  const PreviewImageCloseButton = styled.button`
+    color: #ffffff;
+    outline: none;
+    border: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    cursor: pointer;
+    font-size: 20px;
+    :hover {
+      color: rgb(127, 117, 117);
     }
   `;
 
@@ -102,18 +132,34 @@ const CreateNFT = () => {
     }
   `;
 
-  const onSubmitNft = (e) => {
+  const onSubmitNft = async (e) => {
     e.preventDefault();
-    console.log('Hi');
+    //ipfs에 이미지 업로드하고 hash값 리턴
+    const imgURI = await ipfs.add(files);
+
+    const metadata = {
+      name: e.target[2].value,
+      description: e.target[3].value,
+      imgURI: `https://ipfs.io/ipfs/${imgURI.path}`,
+    };
+
+    submitNFT(metadata);
     navigate('/');
   };
 
-  const onHandleChange = (e) => {
-    const fileReader = new FileReader();
-    fileReader.readAsText(e.target.files[0], 'UTF');
+  const onClickXButton = () => {
+    setImgSrc('');
+  };
+
+  const onHandleChange = (event) => {
+    event.preventDefault();
+    setFiles(event.target.files[0]);
+    let fileReader = new FileReader();
+    let file = event.target.files[0];
+    fileReader.readAsDataURL(file);
+    // fileReader.readAsText(e.target.files[0], 'UTF');
     fileReader.onload = (e) => {
-      console.log(e.target.result);
-      setFiles(e.target.result);
+      setImgSrc(e.target.result);
     };
   };
 
@@ -121,17 +167,32 @@ const CreateNFT = () => {
     <Container>
       <form onSubmit={(e) => onSubmitNft(e)}>
         <Title>상품 등록</Title>
-        <InputImage id="fileUpload" type="file" onChange={onHandleChange} />
+        <InputImage
+          id="fileUpload"
+          type="file"
+          name="nft_image"
+          accept="image/jpg,impge/png,image/jpeg,image/gif"
+          onChange={onHandleChange}
+        />
         <label htmlFor="fileUpload">
           <InputTemp>
             <ImageContainer>
-              <IconContext.Provider
-                value={{ color: 'rgb(204, 204, 204) ', outline: 'none' }}
-              >
-                <div>
-                  <MdOutlineImage size={70} />
-                </div>
-              </IconContext.Provider>
+              {imgSrc ? (
+                <>
+                  <PreviewImage src={imgSrc} />
+                  <PreviewImageCloseButton onClick={onClickXButton}>
+                    X
+                  </PreviewImageCloseButton>
+                </>
+              ) : (
+                <IconContext.Provider
+                  value={{ color: 'rgb(204, 204, 204) ', outline: 'none' }}
+                >
+                  <div>
+                    <MdOutlineImage size={70} />
+                  </div>
+                </IconContext.Provider>
+              )}
             </ImageContainer>
           </InputTemp>
         </label>

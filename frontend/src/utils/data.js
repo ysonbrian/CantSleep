@@ -18,3 +18,9 @@ export const writingContent = async (data) => {
     data,
   });
 };
+
+export const submitNFT = async (data) => {
+  return await axios.post(`${API_URL}/nft`, {
+    data,
+  });
+};
