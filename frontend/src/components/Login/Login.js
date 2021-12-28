@@ -26,7 +26,6 @@ const Login = (props) => {
       username: userName,
       userId,
     } = await login(username, password);
-    console.log(userId, accessToken, address, userName);
     setUser({
       userId,
       accessToken,

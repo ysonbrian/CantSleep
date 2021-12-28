@@ -59,7 +59,7 @@ router.post("/login", async (req, res) => {
   }
 
   const token = jwt.sign(
-    { username: user.userName, userId: user.id },
+    { username: user.userName, userId: user.id, userAddress: user.address },
     "BEB-01-PROJECT-02",
     {
       expiresIn: 86400, // 24 hours
