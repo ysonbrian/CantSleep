@@ -34,7 +34,9 @@ const verifyToken = (req, res, next) => {
         next();
       } else {
         // console.log(decoded);
-        req.userName = decoded.username; // TODO: 확인 필요
+        // console.log(decoded);
+        req.userName = decoded.username;
+        req.userId = decoded.userId; // TODO: 확인 필요
         // req.user = decoded;
         next();
       }
