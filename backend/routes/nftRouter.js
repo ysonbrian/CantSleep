@@ -6,6 +6,7 @@ const { User, Contents } = require('../models');
 
 router.post('/', (req, res, next) => {
   const { name, description, imgURI } = req.body.data;
+  console.log(name, description, imgURI);
 });
 
 module.exports = router;
