@@ -149,17 +149,6 @@ const CreateNFT = () => {
     <Container>
       <form onSubmit={(e) => onSubmitNft(e)}>
         <Title>상품 등록</Title>
-        {/* {imgSrc ? (
-          <img src={imgSrc} />
-        ) : (
-          <InputImage
-            id="fileUpload"
-            type="file"
-            name="nft_image"
-            accept="image/jpg,impge/png,image/jpeg,image/gif"
-            onChange={onHandleChange}
-          />
-        )} */}
         <InputImage
           id="fileUpload"
           type="file"
