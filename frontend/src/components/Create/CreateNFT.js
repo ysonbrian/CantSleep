@@ -179,7 +179,6 @@ const CreateNFT = () => {
           id="fileUpload"
           type="file"
           name="nft_image"
-          accept="image/jpg,impge/png,image/jpeg,image/gif"
           onChange={onHandleChange}
         />
         <label htmlFor="fileUpload">
