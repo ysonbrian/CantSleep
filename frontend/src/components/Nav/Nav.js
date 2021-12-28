@@ -1,17 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { AiFillEdit } from 'react-icons/ai';
-import { BsImage } from 'react-icons/bs';
-import logo from '../../image/logo2.svg';
-import { useStore } from '../../utils/store';
-import { logout } from '../../utils/auth';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { AiFillEdit } from "react-icons/ai";
+import { BsImage } from "react-icons/bs";
+import logo from "../../image/logo2.svg";
+import { useStore } from "../../utils/store";
+import { logout } from "../../utils/auth";
 const Nav = () => {
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
   const NavContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     background-color: #fefefe;
     @media (max-width: 1200px) {
       grid-template-columns: 4fr 1fr 4fr;
