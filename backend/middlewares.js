@@ -1,4 +1,5 @@
 const { User, Users } = require("./models");
+var jwt = require("jsonwebtoken");
 
 const checkRegisterValidation = async (req, res, next) => {
   const { username, password } = req.body;
@@ -21,16 +22,21 @@ const checkRegisterValidation = async (req, res, next) => {
 const verifyToken = (req, res, next) => {
   const token = req.headers["x-access-token"];
 
+  console.log(token);
   if (!token) {
-    return res.status(403).json("message: 인증을 위한 토큰을 전송해주세요.");
+    // return res.status(403).json("message: 인증을 위한 토큰을 전송해주세요.");
+    next();
   }
   jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
     if (err) {
-      return res
-        .status(401)
-        .json({ message: "유효하지 않은 토큰입니다. 인증에 실패하였습니다." });
+      // return res
+      //   .status(401)
+      //   .json({ message: "유효하지 않은 토큰입니다. 인증에 실패하였습니다." });
+      next();
     }
-    req.userId = decoded.id; // TODO: 확인 필요
+    // console.log(decoded);
+    req.userId = decoded.username; // TODO: 확인 필요
+    // req.user = decoded;
     next();
   });
 };
