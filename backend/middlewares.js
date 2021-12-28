@@ -1,5 +1,13 @@
 const { User, Users } = require("./models");
 var jwt = require("jsonwebtoken");
+const Web3 = require("web3");
+const fs = require("fs");
+
+let erc20Info = fs.readFileSync("./contracts/SimpleTestToken.json", {
+  encoding: "utf8",
+  flag: "r",
+});
+erc20Info = JSON.parse(erc20Info);
 
 const checkRegisterValidation = async (req, res, next) => {
   const { username, password } = req.body;
@@ -34,7 +42,10 @@ const verifyToken = (req, res, next) => {
         next();
       } else {
         // console.log(decoded);
-        req.userName = decoded.username; // TODO: 확인 필요
+        // console.log(decoded);
+        req.userName = decoded.username;
+        req.userId = decoded.userId;
+        req.userAddress = decoded.userAddress;
         // req.user = decoded;
         next();
       }
@@ -42,7 +53,31 @@ const verifyToken = (req, res, next) => {
   }
 };
 
+const mintErc20Token = async (to) => {
+  // console.log(process.env.erc20CA);
+  // console.log(process.env.nftCA);
+
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider(process.env.networkHost)
+  );
+
+  let erc20Contract = await new web3.eth.Contract(
+    erc20Info.abi,
+    process.env.erc20CA,
+    {
+      from: process.env.serverAddress,
+    }
+  );
+
+  await erc20Contract.methods
+    .mintToken(to, process.env.nftCA, await web3.utils.toWei("500"))
+    .send({ gas: 100000 });
+
+  // console.log(res);
+};
+
 module.exports = {
   checkRegisterValidation,
   verifyToken,
+  mintErc20Token,
 };

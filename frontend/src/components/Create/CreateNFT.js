@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { submitNFT } from '../../utils/data';
@@ -35,29 +36,53 @@ const CreateNFT = () => {
     letter-spacing: 0px;
     margin-bottom: 20px;
   `;
+=======
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { submitNFT } from "../../utils/data";
+import styled from "styled-components";
+import { IconContext } from "react-icons";
+import { MdOutlineImage } from "react-icons/md";
+import { create } from "ipfs-http-client";
 
-  const InputImage = styled.input`
-    display: none;
-  `;
-  const InputTemp = styled.div`
-    border-radius: 10px;
-    border: 3px dashed rgb(127, 117, 117);
-  `;
-  const ImageContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-    border-radius: 10px;
-    height: 257px;
-    width: 350px;
-    padding: 1px;
-    :hover {
-      background-color: rgb(226, 224, 224);
-    }
-  `;
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40px;
+`;
+const Title = styled.div`
+  line-height: 110%;
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: 0px;
+  margin-bottom: 20px;
+`;
+>>>>>>> bb40f75294c257136dfecb8a5534c1a5e4c60979
 
+const InputImage = styled.input`
+  display: none;
+`;
+const InputTemp = styled.div`
+  border-radius: 10px;
+  border: 3px dashed rgb(127, 117, 117);
+`;
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+  height: 257px;
+  width: 350px;
+  :hover {
+    background-color: rgb(226, 224, 224);
+  }
+`;
+
+<<<<<<< HEAD
   const PreviewImage = styled.img`
     width: 100%;
     height: 100%;
@@ -80,65 +105,98 @@ const CreateNFT = () => {
       color: rgb(127, 117, 117);
     }
   `;
+=======
+const PreviewImage = styled.img`
+  width: 100%;
+  height: 100%;
+  :hover {
+    background-color: transparent;
+  }
+`;
+const PreviewImageCloseButton = styled.button`
+  color: #ffffff;
+  outline: none;
+  border: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  cursor: pointer;
+  font-size: 20px;
+  :hover {
+    color: rgb(127, 117, 117);
+  }
+`;
+>>>>>>> bb40f75294c257136dfecb8a5534c1a5e4c60979
 
-  const InputInfoContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    gap: 10px;
-    letter-spacing: 2px;
-    color: rgb(33, 29, 29);
-  `;
+const InputInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  gap: 10px;
+  letter-spacing: 2px;
+  color: rgb(33, 29, 29);
+`;
 
-  const InputInfo = styled.input`
-    border: none;
-    outline: none;
-    height: 48px;
-    padding-left: 10px;
-    min-width: 0px;
-    border-radius: 10px;
-    background-color: rgb(229, 224, 224);
-    :hover {
-      background-color: rgb(211, 208, 208);
-    }
-    :focus {
-      background-color: rgb(211, 208, 208);
-    }
-    ::placeholder {
-      color: #ffffff;
-    }
-  `;
+const InputInfo = styled.input`
+  border: none;
+  outline: none;
+  height: 48px;
+  padding-left: 10px;
+  min-width: 0px;
+  border-radius: 10px;
+  background-color: rgb(229, 224, 224);
+  :hover {
+    background-color: rgb(211, 208, 208);
+  }
+  :focus {
+    background-color: rgb(211, 208, 208);
+  }
+  ::placeholder {
+    color: #ffffff;
+  }
+`;
 
-  const ButtonContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100px;
-    margin-top: 20px;
-    gap: 20px;
-  `;
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100px;
+  margin-top: 20px;
+  gap: 20px;
+`;
 
-  const SubmitButton = styled.button`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70px;
-    height: 40px;
-    border-radius: 6px;
-    text-align: center;
-    color: #f4f4f4;
-    border: none;
-    background-color: #05b388;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 0px 1.25rem;
-    margin-right: 10px;
-    letter-spacing: 2px;
-    :hover {
-      opacity: 0.7;
-    }
-  `;
+const SubmitButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 40px;
+  border-radius: 6px;
+  text-align: center;
+  color: #f4f4f4;
+  border: none;
+  background-color: #05b388;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0px 1.25rem;
+  margin-right: 10px;
+  letter-spacing: 2px;
+  :hover {
+    opacity: 0.7;
+  }
+`;
+
+const CreateNFT = () => {
+  let navigate = useNavigate();
+  const ipfs = create({
+    host: "ipfs.infura.io",
+    port: 5001,
+    protocol: "https",
+  });
+  const [files, setFiles] = useState("");
+  const [imgSrc, setImgSrc] = useState("");
 
   const onSubmitNft = async (e) => {
     e.preventDefault();
@@ -152,6 +210,7 @@ const CreateNFT = () => {
       description: e.target[3].value,
       imgURI: `https://ipfs.io/ipfs/${imgURI.path}`,
     };
+<<<<<<< HEAD
     const tokenUri = await ipfs.add(JSON.stringify(metadata));
     const result = {
       name: metadata.name,
@@ -163,10 +222,15 @@ const CreateNFT = () => {
 
     navigate('/');
     window.location.reload(false);
+=======
+
+    submitNFT(metadata);
+    navigate("/");
+>>>>>>> bb40f75294c257136dfecb8a5534c1a5e4c60979
   };
 
   const onClickXButton = () => {
-    setImgSrc('');
+    setImgSrc("");
   };
 
   const onHandleChange = (event) => {
@@ -203,7 +267,7 @@ const CreateNFT = () => {
                 </>
               ) : (
                 <IconContext.Provider
-                  value={{ color: 'rgb(204, 204, 204) ', outline: 'none' }}
+                  value={{ color: "rgb(204, 204, 204) ", outline: "none" }}
                 >
                   <div>
                     <MdOutlineImage size={70} />
