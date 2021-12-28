@@ -19,7 +19,7 @@ const testRouter = require('./routes/test');
 const contentsRouter = require('./routes/contentsRouter');
 const serverTokenRouter = require('./routes/TransferRouter');
 const infoRouter = require('./routes/infoRouter.js');
-
+const nftRouter = require('./routes/nftRouter.js');
 const options = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -56,6 +56,7 @@ app.use('/contents', contentsRouter);
 app.use('/users', Login);
 app.use('/test', testRouter);
 app.use('/serverToken', serverTokenRouter);
+app.use('/nft', nftRouter);
 
 //db테이블을 models안에서 생성한다. 그다음 그 객체를 require해와서 다양한 메서드를 사용한다.
 // ex)findAll,
