@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = "http://localhost:1234";
 
 export const login = async (username, password) => {
-  const { data } = await axios.post(`${API_URL}/test/login`, {
+  const { data } = await Axios.post(`${API_URL}/test/login`, {
     username,
     password,
   });
@@ -21,7 +21,7 @@ export const logout = () => {
 
 export const register = (username, password) => {
   console.log(username, password);
-  return axios.post(
+  return Axios.post(
     // `${API_URL}/test/register`,
     // {
     //   username,
