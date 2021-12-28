@@ -20,7 +20,6 @@ export const logout = () => {
 };
 
 export const register = (username, password) => {
-  console.log(username, password);
   return Axios.post(
     // `${API_URL}/test/register`,
     // {
@@ -41,7 +40,6 @@ export const getCurrentUser = () => {
 export const authHeader = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
-  console.log(user);
   if (user && user.accessToken) {
     return { "x-access-token": user.accessToken };
   } else {
