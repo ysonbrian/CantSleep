@@ -25,6 +25,7 @@ import { useStore, useData } from './utils/store';
 
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import CreateNFT from './components/Create/CreateNFT';
 
 function App() {
   const [writingList, setWritingList] = useData((state) => [
@@ -147,6 +148,7 @@ function App() {
               path="/create"
               element={<Create getWriting={getWriting} />}
             />
+            <Route path="/createNFT" element={<CreateNFT />} />
             <Route
               path={`/list/${clickedItem.id}`}
               element={<MainClickedPage clickedItem={clickedItem} />}
