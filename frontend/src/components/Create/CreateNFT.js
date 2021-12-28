@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { IconContext } from 'react-icons';
 import { MdOutlineImage } from 'react-icons/md';
 import { create } from 'ipfs-http-client';
+import { useLoading } from '../../utils/store';
 
 const CreateNFT = () => {
   let navigate = useNavigate();
@@ -15,6 +16,11 @@ const CreateNFT = () => {
   });
   const [files, setFiles] = useState('');
   const [imgSrc, setImgSrc] = useState('');
+  const [isLoading, setIsLoading] = useLoading((state) => [
+    state.isLoading,
+    state.setIsLoading,
+  ]);
+
   const Container = styled.div`
     display: flex;
     justify-content: flex-start;
@@ -70,7 +76,7 @@ const CreateNFT = () => {
     background: none;
     cursor: pointer;
     font-size: 20px;
-    x :hover {
+    :hover {
       color: rgb(127, 117, 117);
     }
   `;
@@ -137,6 +143,8 @@ const CreateNFT = () => {
   const onSubmitNft = async (e) => {
     e.preventDefault();
     //ipfs에 이미지 업로드하고 hash값 리턴
+    setIsLoading(true);
+    console.log(isLoading);
     const imgURI = await ipfs.add(files);
 
     const metadata = {
@@ -152,7 +160,9 @@ const CreateNFT = () => {
       path: tokenUri.path,
     };
     submitNFT(result);
+
     navigate('/');
+    window.location.reload(false);
   };
 
   const onClickXButton = () => {
@@ -178,8 +188,7 @@ const CreateNFT = () => {
         <InputImage
           id="fileUpload"
           type="file"
-          name="nft_image"
-          accept="image/jpg,impge/png,image/jpeg,image/gif"
+          name="fileUpload"
           onChange={onHandleChange}
         />
         <label htmlFor="fileUpload">
@@ -206,13 +215,20 @@ const CreateNFT = () => {
         </label>
         <InputInfoContainer>
           <label htmlFor="inputName">이름</label>
-          <InputInfo id="inputName" placeholder="아이템 이름" />
+          <InputInfo
+            type="text"
+            id="inputName"
+            placeholder="아이템 이름"
+            required
+          />
         </InputInfoContainer>
         <InputInfoContainer>
-          <label htmlFor="inputName">정보</label>
+          <label htmlFor="inputDescription">정보</label>
           <InputInfo
-            id="inputName"
+            type="text"
+            id="inputDescription"
             placeholder="선택한 아이템의 정보를 입력 해주세요"
+            required
           />
         </InputInfoContainer>
         <ButtonContainer>

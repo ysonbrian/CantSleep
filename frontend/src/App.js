@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   unstable_HistoryRouter as HistoryRouter,
-  BrowserRouter as Router,
   Routes,
   Route,
 } from 'react-router-dom';
@@ -10,7 +9,6 @@ import Create from './components/Create/Create';
 import Login from './components/Login/Login';
 import Main from './components/Main/Main';
 import MainClickedPage from './components/Main/MainClickedPage';
-import MainListItem from './components/Main/MainListItem';
 import Nav from './components/Nav/Nav';
 import Register from './components/Register/Register';
 
@@ -21,7 +19,7 @@ import MainRight from './image/MainRight.svg';
 import { createBrowserHistory } from 'history';
 import { getCurrentUser, logout, parseJwt } from './utils/auth';
 import { getAllUsersWList } from './utils/data';
-import { useStore, useData } from './utils/store';
+import { useStore, useData, useLoading } from './utils/store';
 
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -34,7 +32,10 @@ function App() {
   ]);
   const [clickedItem, setClickedItem] = useState('');
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useLoading((state) => [
+    state.isLoading,
+    state.setIsLoading,
+  ]);
 
   const getWriting = (data) => {
     setWritingList((prev) => {
@@ -103,18 +104,18 @@ function App() {
       setUser(user);
     }
     console.log(user);
-  }, []);
+  }, [setUser]);
 
   useEffect(() => {
     async function fetchData() {
-      setLoading(true);
+      setIsLoading(true);
       const { data } = await getAllUsersWList();
       const orderData = data.reverse();
       setWritingList(orderData);
-      setLoading(false);
+      setIsLoading(false);
     }
     fetchData();
-  }, []);
+  }, [setIsLoading, setWritingList]);
 
   return (
     <HistoryRouter history={history}>
@@ -123,7 +124,7 @@ function App() {
         <AppMainLeft>
           <img src={MainLeft} alt="" />
         </AppMainLeft>
-        {loading ? (
+        {isLoading ? (
           <AppMainMiddle>
             <Loader
               type="ThreeDots"
