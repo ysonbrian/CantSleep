@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { AiFillEdit, AiFillHome } from 'react-icons/ai';
+import { AiFillEdit } from 'react-icons/ai';
+import { BsImage } from 'react-icons/bs';
 import logo from '../../image/logo2.svg';
 import { useStore } from '../../utils/store';
 import { logout } from '../../utils/auth';
@@ -9,7 +10,7 @@ const Nav = () => {
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
   const NavContainer = styled.div`
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     font-family: 'Roboto', sans-serif;
     background-color: #fefefe;
     @media (max-width: 1200px) {
@@ -143,18 +144,19 @@ const Nav = () => {
           </Link>
         )}
         {user?.username ? (
-          <Link to="/create">
-            <li>
-              <AiFillEdit size={30} />
-            </li>
-          </Link>
-        ) : (
-          <Link to="/login">
-            <li onClick={() => alert('로그인 해주세요.')}>
-              <AiFillEdit size={30} />
-            </li>
-          </Link>
-        )}
+          <>
+            <Link to="/create">
+              <li>
+                <AiFillEdit size={30} />
+              </li>
+            </Link>
+            <Link to="/createNFT">
+              <li>
+                <BsImage size={30} />
+              </li>
+            </Link>
+          </>
+        ) : null}
       </NavBar>
     </NavContainer>
   );
