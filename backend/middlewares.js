@@ -22,23 +22,27 @@ const checkRegisterValidation = async (req, res, next) => {
 const verifyToken = (req, res, next) => {
   const token = req.headers["x-access-token"];
 
-  console.log(token);
   if (!token) {
     // return res.status(403).json("message: 인증을 위한 토큰을 전송해주세요.");
+    console.log(1);
     next();
+  } else {
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+      if (err) {
+        // return res
+        //   .status(401)
+        //   .json({ message: "유효하지 않은 토큰입니다. 인증에 실패하였습니다." });
+        console.log(2);
+        next();
+      } else {
+        // console.log(decoded);
+        req.userName = decoded.username; // TODO: 확인 필요
+        // req.user = decoded;
+        console.log(3);
+        next();
+      }
+    });
   }
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
-    if (err) {
-      // return res
-      //   .status(401)
-      //   .json({ message: "유효하지 않은 토큰입니다. 인증에 실패하였습니다." });
-      next();
-    }
-    // console.log(decoded);
-    req.userId = decoded.username; // TODO: 확인 필요
-    // req.user = decoded;
-    next();
-  });
 };
 
 module.exports = {
