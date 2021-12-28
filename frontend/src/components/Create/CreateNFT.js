@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { submitNFT } from '../../utils/data';
 import styled from 'styled-components';
 import { IconContext } from 'react-icons';
 import { MdOutlineImage } from 'react-icons/md';
+import { create } from 'ipfs-http-client';
+
 const CreateNFT = () => {
   let navigate = useNavigate();
+  const ipfs = create({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+  });
   const [files, setFiles] = useState('');
   const [imgSrc, setImgSrc] = useState('');
   const Container = styled.div`
@@ -124,9 +132,18 @@ const CreateNFT = () => {
     }
   `;
 
-  const onSubmitNft = (e) => {
+  const onSubmitNft = async (e) => {
     e.preventDefault();
-    console.log('Hi');
+    //ipfs에 이미지 업로드하고 hash값 리턴
+    const imgURI = await ipfs.add(files);
+
+    const metadata = {
+      name: e.target[2].value,
+      description: e.target[3].value,
+      imgURI: `https://ipfs.io/ipfs/${imgURI.path}`,
+    };
+
+    submitNFT(metadata);
     navigate('/');
   };
 
@@ -136,6 +153,7 @@ const CreateNFT = () => {
 
   const onHandleChange = (event) => {
     event.preventDefault();
+    setFiles(event.target.files[0]);
     let fileReader = new FileReader();
     let file = event.target.files[0];
     fileReader.readAsDataURL(file);
