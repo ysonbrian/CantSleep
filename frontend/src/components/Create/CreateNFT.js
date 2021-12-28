@@ -46,6 +46,7 @@ const CreateNFT = () => {
     border-radius: 10px;
     height: 257px;
     width: 350px;
+    padding: 1px;
     :hover {
       background-color: rgb(226, 224, 224);
     }
@@ -54,6 +55,7 @@ const CreateNFT = () => {
   const PreviewImage = styled.img`
     width: 100%;
     height: 100%;
+    border-radius: 10px;
     :hover {
       background-color: transparent;
     }
@@ -68,7 +70,7 @@ const CreateNFT = () => {
     background: none;
     cursor: pointer;
     font-size: 20px;
-    :hover {
+    x :hover {
       color: rgb(127, 117, 117);
     }
   `;
@@ -142,8 +144,14 @@ const CreateNFT = () => {
       description: e.target[3].value,
       imgURI: `https://ipfs.io/ipfs/${imgURI.path}`,
     };
-
-    submitNFT(metadata);
+    const tokenUri = await ipfs.add(JSON.stringify(metadata));
+    const result = {
+      name: metadata.name,
+      description: metadata.description,
+      imgURI: metadata.imgURI,
+      path: tokenUri.path,
+    };
+    submitNFT(result);
     navigate('/');
   };
 
