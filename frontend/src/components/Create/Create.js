@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { BiArrowBack } from "react-icons/bi";
-import axios from "axios";
-import { writingContent } from "../../utils/data";
-import { useStore } from "../../utils/store";
-import { useData } from "../../utils/store";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { BiArrowBack } from 'react-icons/bi';
+import axios from 'axios';
+import { writingContent } from '../../utils/data';
+import { useStore } from '../../utils/store';
+import { useData } from '../../utils/store';
+import { useLoading } from '../../utils/store';
 
 const CreateContainer = styled.div`
   display: flex;
@@ -89,9 +90,13 @@ const CreateSubmitButton = styled.button`
 const Create = ({ getWriting }) => {
   let navigate = useNavigate();
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
-  // const [writing, setWritingList] = useData((state) => state.setWritingList);
+  const [isLoading, setIsLoading] = useLoading((state) => [
+    state.isLoading,
+    state.setIsLoading,
+  ]);
 
   const onSubmitWriting = (e) => {
+    setIsLoading(true);
     e.preventDefault();
     let data = {
       userId: user.username,
@@ -100,7 +105,7 @@ const Create = ({ getWriting }) => {
       date: new Date().toLocaleString(),
     };
     writingContent(data);
-    navigate("/");
+    navigate('/');
     window.location.reload(false);
   };
   return (

@@ -1,35 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   unstable_HistoryRouter as HistoryRouter,
-  BrowserRouter as Router,
   Routes,
   Route,
-} from "react-router-dom";
-import "./App.css";
-import Create from "./components/Create/Create";
-import Login from "./components/Login/Login";
-import Main from "./components/Main/Main";
-import MainClickedPage from "./components/Main/MainClickedPage";
-import MainListItem from "./components/Main/MainListItem";
-import Nav from "./components/Nav/Nav";
-import Register from "./components/Register/Register";
+} from 'react-router-dom';
+import './App.css';
+import Create from './components/Create/Create';
+import Login from './components/Login/Login';
+import Main from './components/Main/Main';
+import MainClickedPage from './components/Main/MainClickedPage';
+import Nav from './components/Nav/Nav';
+import Register from './components/Register/Register';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import MainLeft from "./image/MainLeft.svg";
-import MainRight from "./image/MainRight.svg";
-import { createBrowserHistory } from "history";
-import { getCurrentUser, logout, parseJwt } from "./utils/auth";
-import { getAllUsersWList } from "./utils/data";
-import { useStore, useData } from "./utils/store";
+import MainLeft from './image/MainLeft.svg';
+import MainRight from './image/MainRight.svg';
+import { createBrowserHistory } from 'history';
+import { getCurrentUser, logout, parseJwt } from './utils/auth';
+import { getAllUsersWList } from './utils/data';
+import { useStore, useData, useLoading } from './utils/store';
 
-import Loader from "react-loader-spinner";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import CreateNFT from "./components/Create/CreateNFT";
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import CreateNFT from './components/Create/CreateNFT';
+import Explore from './components/Explore/Explore';
 
 const AppMainContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
   width: 100%;
   height: 100%;
   background-color: #f4f4f4;
@@ -69,9 +68,12 @@ function App() {
     state.writingList,
     state.setWritingList,
   ]);
-  const [clickedItem, setClickedItem] = useState("");
+  const [clickedItem, setClickedItem] = useState('');
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useLoading((state) => [
+    state.isLoading,
+    state.setIsLoading,
+  ]);
 
   const getWriting = (data) => {
     setWritingList((prev) => {
@@ -80,12 +82,12 @@ function App() {
   };
   const onClickedItem = (data) => {
     setClickedItem(data);
-    console.log("App", clickedItem);
+    console.log('App', clickedItem);
   };
 
   let history = createBrowserHistory();
   history.listen((location, action) => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem('user'));
     // console.log("토큰 만료 검사");
 
     if (user) {
@@ -104,18 +106,18 @@ function App() {
       setUser(user);
     }
     console.log(user);
-  }, []);
+  }, [setUser]);
 
   useEffect(() => {
     async function fetchData() {
-      setLoading(true);
+      setIsLoading(true);
       const { data } = await getAllUsersWList();
       const orderData = data.reverse();
       setWritingList(orderData);
-      setLoading(false);
+      setIsLoading(false);
     }
     fetchData();
-  }, []);
+  }, [setIsLoading, setWritingList]);
 
   return (
     <HistoryRouter history={history}>
@@ -124,7 +126,7 @@ function App() {
         <AppMainLeft>
           <img src={MainLeft} alt="" />
         </AppMainLeft>
-        {loading ? (
+        {isLoading ? (
           <AppMainMiddle>
             <Loader
               type="ThreeDots"
@@ -154,6 +156,7 @@ function App() {
               path={`/list/${clickedItem.id}`}
               element={<MainClickedPage clickedItem={clickedItem} />}
             />
+            <Route path="/explore" element={<Explore />} />
           </Routes>
         )}
 

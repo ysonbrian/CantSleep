@@ -11,3 +11,13 @@ export const useData = create((set) => ({
   writingList: null,
   setWritingList: (writingList) => set({ writingList }),
 }));
+
+export const useLoading = create((set) => ({
+  isLoading: false,
+  setIsLoading: (isLoading) => set({ isLoading }),
+}));
+
+export const useNftData = create((set) => ({
+  nftList: null,
+  setNftList: (nftList) => set({ nftList }),
+}));
