@@ -16,3 +16,8 @@ export const useLoading = create((set) => ({
   isLoading: false,
   setIsLoading: (isLoading) => set({ isLoading }),
 }));
+
+export const useNftData = create((set) => ({
+  nftList: null,
+  setNftList: (nftList) => set({ nftList }),
+}));

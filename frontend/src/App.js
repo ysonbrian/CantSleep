@@ -24,10 +24,11 @@ import { useStore, useData, useLoading } from './utils/store';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import CreateNFT from './components/Create/CreateNFT';
+import Explore from './components/Explore/Explore';
 
 const AppMainContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
   width: 100%;
   height: 100%;
   background-color: #f4f4f4;
@@ -155,6 +156,7 @@ function App() {
               path={`/list/${clickedItem.id}`}
               element={<MainClickedPage clickedItem={clickedItem} />}
             />
+            <Route path="/explore" element={<Explore />} />
           </Routes>
         )}
 
