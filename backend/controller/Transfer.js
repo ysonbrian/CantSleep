@@ -2,9 +2,9 @@
 const { MEDIUMINT } = require("sequelize");
 const Web3 = require("web3");
 const web3 = new Web3("HTTP://127.0.0.1:7545");
-const {ABI} = require('../ABI');
-const abi = ABI();
-var myContract = new web3.eth.Contract(abi,"0x12Ed1f06ddAcfbBd5401508F053f7154c38E37F1");
+const {erc20ABI} = require('../ABI');
+const erc20Abi = erc20ABI();
+var myContract = new web3.eth.Contract(erc20Abi,"0x12Ed1f06ddAcfbBd5401508F053f7154c38E37F1");
 
 
 //tranfer함수를 제작해서 내보내는 컨트롤러 
