@@ -92,7 +92,6 @@ const InputInfo = styled.input`
     color: #ffffff;
   }
 `;
-
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
