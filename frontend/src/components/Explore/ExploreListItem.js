@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { IconContext } from 'react-icons';
 import { FaEthereum } from 'react-icons/fa';
+import { BiCube } from 'react-icons/bi';
+import { AiOutlineFileSearch } from 'react-icons/ai';
+
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -16,7 +20,7 @@ const ListContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: 331px;
+  height: 100%;
   border-radius: 10px 10px 0 0;
 `;
 
@@ -44,6 +48,7 @@ const ItemFooter = styled.div`
   font-weight: 500;
   height: 42px;
   width: 100%;
+  padding: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background: linear-gradient(
@@ -79,6 +84,27 @@ const ItemBuyButton = styled.button`
   }
 `;
 
+const ItemIPFSContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  background-color: #ffffff;
+  a:hover {
+    color: black;
+  }
+`;
+
+const ItemIPFSInfo = styled.a`
+  display: flex;
+  text-decoration: none;
+  color: #6d6d6d;
+  a:hover {
+    color: black;
+  }
+`;
+
 const ExploreListItem = ({ data }) => {
   console.log(data.imageURI);
 
@@ -102,6 +128,20 @@ const ExploreListItem = ({ data }) => {
           </PriceContainerDiv>
         </div>
       </ItemDiscriptionDiv>
+      <hr />
+      <ItemIPFSContainer>
+        <ItemIPFSInfo
+          href={data.tokenURI ? data.tokenURI : null}
+          target="_blank"
+        >
+          <BiCube />
+          View metadata
+        </ItemIPFSInfo>
+        <ItemIPFSInfo href={data.imgURI ? data.imgURI : null} target="_blank">
+          <AiOutlineFileSearch />
+          View on IPFS
+        </ItemIPFSInfo>
+      </ItemIPFSContainer>
       <ItemFooter>
         <ItemBuyButton onClick={onClickBuy}>품절</ItemBuyButton>
       </ItemFooter>
