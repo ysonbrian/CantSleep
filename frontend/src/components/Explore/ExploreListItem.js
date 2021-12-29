@@ -48,6 +48,7 @@ const ItemFooter = styled.div`
   font-weight: 500;
   height: 42px;
   width: 100%;
+  padding: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background: linear-gradient(
