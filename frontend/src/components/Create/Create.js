@@ -16,6 +16,7 @@ const CreateContainer = styled.div`
   width: 100%;
   height: 100vh;
   padding: 10px;
+  margin: 20px;
 `;
 const CreateTitleInput = styled.input`
   width: 100%;

@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { Link } from "react-router-dom";
-import { BiArrowBack } from "react-icons/bi";
+import React from 'react';
+import styled from 'styled-components';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Link } from 'react-router-dom';
+import { BiArrowBack } from 'react-icons/bi';
 
 const ClickedItemContainer = styled.div`
   display: flex;
@@ -12,10 +12,9 @@ const ClickedItemContainer = styled.div`
   flex-direction: column;
   font-size: 1rem;
   line-height: 2.5rem;
-  margin-top: 20px;
-  width: 100%;
+  margin: 100px;
   height: 100vh;
-  padding: 0 10%;
+  padding: 0 5%;
   a {
     cursor: pointer;
     font-size: 40px;

@@ -109,6 +109,32 @@ const NavInput = styled.input`
   }
 `;
 
+const ProfileIcon = styled.div`
+  background-color: #118ab2;
+  background-image: linear-gradient(
+    319deg,
+    #118ab2 0%,
+    #06d6a0 37%,
+    #ffd166 100%
+  );
+
+  background-repeat: initial;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: #f2f2f2;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  border: solid 10px #ffffff;
+
+  :hover {
+    opacity: 0.7;
+  }
+`;
+
 const Nav = () => {
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
 
@@ -124,7 +150,9 @@ const Nav = () => {
       <NavBar>
         <NavInput type="text" placeholder="검색" />
         {user?.username ? (
-          user.username
+          <Link to="/mypage">
+            <ProfileIcon />
+          </Link>
         ) : (
           <Link to="/login">
             <li>로그인</li>

@@ -1,6 +1,6 @@
-import React from "react";
-import MainList from "./MainList";
-import styled from "styled-components";
+import React from 'react';
+import MainList from './MainList';
+import styled from 'styled-components';
 
 const MainContainer = styled.div`
   display: flex;
@@ -8,14 +8,25 @@ const MainContainer = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 `;
+
+const MainListContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
 const MainHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 40px;
-  padding: 30px;
+  padding: 20px;
+  margin-top: 50px;
+  margin-bottom: 30px;
   width: 100%;
   p {
     font-size: 40px;
@@ -31,8 +42,9 @@ const Main = ({ writingList, onClickedItem }) => {
       <MainHeader>
         <p>게시글</p>
       </MainHeader>
-
-      <MainList writingList={writingList} onClickedItem={onClick} />
+      <MainListContainer>
+        <MainList writingList={writingList} onClickedItem={onClick} />
+      </MainListContainer>
     </MainContainer>
   );
 };

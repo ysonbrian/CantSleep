@@ -25,10 +25,12 @@ import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import CreateNFT from './components/Create/CreateNFT';
 import Explore from './components/Explore/Explore';
+import Mypage from './components/Mypage/Mypage';
+import Footer from './components/Footer/Footer';
 
 const AppMainContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: 4fr 1fr;
   width: 100%;
   height: 100%;
   background-color: #f4f4f4;
@@ -37,7 +39,7 @@ const AppMainLeft = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 30px;
   width: 100%;
   img {
     width: 100%;
@@ -61,6 +63,13 @@ const AppMainMiddle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const AppFooter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
 `;
 
 function App() {
@@ -123,9 +132,9 @@ function App() {
     <HistoryRouter history={history}>
       <Nav />
       <AppMainContainer>
-        <AppMainLeft>
+        {/* <AppMainLeft>
           <img src={MainLeft} alt="" />
-        </AppMainLeft>
+        </AppMainLeft> */}
         {isLoading ? (
           <AppMainMiddle>
             <Loader
@@ -157,13 +166,15 @@ function App() {
               element={<MainClickedPage clickedItem={clickedItem} />}
             />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/mypage" element={<Mypage />} />
           </Routes>
         )}
 
-        <AppMainRight>
+        {/* <AppMainRight>
           <img src={MainRight} alt="" />
-        </AppMainRight>
+        </AppMainRight> */}
       </AppMainContainer>
+      <Footer />
     </HistoryRouter>
   );
 }

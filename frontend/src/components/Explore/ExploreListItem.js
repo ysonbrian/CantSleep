@@ -8,13 +8,23 @@ import { AiOutlineFileSearch } from 'react-icons/ai';
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100%;
   cursor: pointer;
   /* overflow: hidden; */
   border: 1px solid rgb(206, 202, 202);
   border-radius: 10px;
-  :hover {
+  /* :hover {
     box-shadow: 0px 0px 5px rgb(102, 100, 100);
+  } */
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+
+  :hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgb(102, 100, 100);
+    overflow: hidden;
+    transform: translateY(-6px);
   }
 `;
 
@@ -88,7 +98,6 @@ const ItemIPFSContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
   padding: 10px;
   background-color: #ffffff;
   a:hover {
@@ -98,11 +107,14 @@ const ItemIPFSContainer = styled.div`
 
 const ItemIPFSInfo = styled.a`
   display: flex;
+  justify-content: center;
   text-decoration: none;
   color: #6d6d6d;
+  gap: 5px;
   a:hover {
     color: black;
   }
+  margin: 0 auto;
 `;
 
 const ExploreListItem = ({ data }) => {
@@ -135,11 +147,11 @@ const ExploreListItem = ({ data }) => {
           target="_blank"
         >
           <BiCube />
-          View metadata
+          메타데이터
         </ItemIPFSInfo>
         <ItemIPFSInfo href={data.imgURI ? data.imgURI : null} target="_blank">
           <AiOutlineFileSearch />
-          View on IPFS
+          IPFS
         </ItemIPFSInfo>
       </ItemIPFSContainer>
       <ItemFooter>

@@ -1,6 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import tempImg from '../../image/MainRight.jpg';
+import { useClickedItem } from '../../utils/store';
+import { useNavigate } from 'react-router-dom';
 
 const MainListItemContainer = styled.div`
   display: flex;
@@ -8,22 +11,28 @@ const MainListItemContainer = styled.div`
   align-items: left;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   border: 1px solid black;
   padding: 20px;
   gap: 10px;
-  margin-bottom: 20px;
   border-radius: 5px;
   background-color: #fefefe;
   a {
     text-decoration: none;
     color: black;
   }
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+
   :hover {
-    background-color: #05b388;
-    a {
-      color: white;
-    }
+    cursor: pointer;
+    box-shadow: rgb(0 0 0 / 25%) 0px 4px 16px 0px;
+    overflow: hidden;
+    transform: translateY(-6px);
   }
+`;
+const MainItemImg = styled.img`
+  width: 100%;
 `;
 
 const MainItemTitle = styled.p`
@@ -45,17 +54,27 @@ const MainItemUser = styled.span`
   margin-bottom: 5px;
 `;
 
+const MainItemImageContainer = styled.div``;
+
 const MainListItem = ({ data, onClickedItem }) => {
+  let navigate = useNavigate();
+  const [clickedItem, setClickedItem] = useClickedItem((state) => [
+    state.clickedItem,
+    state.setClickedItem,
+  ]);
+
   const onClickItem = (data) => {
+    setClickedItem(data);
     onClickedItem(data);
+    navigate(`/list/${data.id}`);
   };
 
-  const date = data?.createdAt?.split("T");
+  const date = data?.createdAt?.split('T');
   let rDate = null;
   if (date) {
-    const newDate = date[0]?.split("-");
-    const newtime = date[1]?.split(".");
-    const newtime2 = newtime[0]?.split(":");
+    const newDate = date[0]?.split('-');
+    const newtime = date[1]?.split('.');
+    const newtime2 = newtime[0]?.split(':');
     const result = [...newDate, ...newtime2];
     rDate = new Date(
       Date.UTC(
@@ -78,10 +97,15 @@ const MainListItem = ({ data, onClickedItem }) => {
           state: data,
         }}
       >
-        <MainItemUser>{data.userId}</MainItemUser>
-        <MainItemTitle>{data.title}</MainItemTitle>
-        <MainItemContent>{data.content}</MainItemContent>
-        <MainItemDate>{date ? rDate : null}</MainItemDate>
+        <MainItemImageContainer>
+          <MainItemImg src={tempImg} />
+        </MainItemImageContainer>
+        <div>
+          <MainItemUser>{data.userId}</MainItemUser>
+          <MainItemTitle>{data.title}</MainItemTitle>
+          <MainItemContent>{data.content}</MainItemContent>
+          <MainItemDate>{date ? rDate : null}</MainItemDate>
+        </div>
       </Link>
     </MainListItemContainer>
   );

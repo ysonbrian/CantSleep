@@ -11,7 +11,7 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 100px;
 `;
 const Title = styled.div`
   line-height: 110%;

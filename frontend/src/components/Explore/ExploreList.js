@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import ExploreListItem from './ExploreListItem';
 const ExploreListContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  place-items: center;
   width: 100%;
   gap: 10px;
   @media (max-width: 1200px) {
