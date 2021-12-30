@@ -91,7 +91,7 @@ const Mypage = () => {
       </MyInfoContainer>
       <hr />
       <MyNftListContainer>
-        {myNftList.length !== 0 ? (
+        {myNftList?.length !== 0 ? (
           <MyNftList myNftList={myNftList} />
         ) : (
           <NoData />
