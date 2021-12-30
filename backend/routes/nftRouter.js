@@ -24,7 +24,6 @@ router.post('/', async (req, res, next) => {
   setTimeout(async () => {
     mintNFT(req, res, data);
   }, 1000);
-
 });
 
 router.get('/', sendToken);
