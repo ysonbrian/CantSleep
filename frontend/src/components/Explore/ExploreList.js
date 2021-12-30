@@ -9,9 +9,12 @@ const ExploreListContainer = styled.div`
   width: 100%;
   gap: 10px;
   @media (max-width: 1200px) {
-    display: grid;
     grid-template-columns: repeat(3, 1fr);
     font-size: 14px;
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 12px;
   }
 `;
 

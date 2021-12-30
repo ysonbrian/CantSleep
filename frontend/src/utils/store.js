@@ -26,3 +26,8 @@ export const useClickedItem = create((set) => ({
   clickedItem: null,
   setClickedItem: (clickedItem) => set({ clickedItem }),
 }));
+
+export const useMyNftList = create((set) => ({
+  myNftList: null,
+  setMyNftList: (myNftList) => set({ myNftList }),
+}));

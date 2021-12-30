@@ -110,7 +110,6 @@ const NavInput = styled.input`
 `;
 
 const ProfileIcon = styled.div`
-  background-color: #118ab2;
   background-image: linear-gradient(
     319deg,
     #118ab2 0%,

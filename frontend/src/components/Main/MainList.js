@@ -11,6 +11,15 @@ const MainListContainer = styled.div`
   height: 100%;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 12px;
+  }
 `;
 
 const MainList = ({ writingList, onClickedItem }) => {

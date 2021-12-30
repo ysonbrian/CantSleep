@@ -12,17 +12,17 @@ const MainListItemContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  border: 1px solid black;
   padding: 20px;
   gap: 10px;
-  border-radius: 5px;
   background-color: #fefefe;
+  border: 1px solid rgb(206, 202, 202);
+  border-radius: 10px;
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
   a {
     text-decoration: none;
     color: black;
   }
-  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
-  transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
 
   :hover {
     cursor: pointer;
@@ -52,6 +52,10 @@ const MainItemDate = styled.span`
 const MainItemUser = styled.span`
   font-size: 20px;
   margin-bottom: 5px;
+`;
+
+const MainItemDiv = styled.div`
+  padding: 10px 0;
 `;
 
 const MainItemImageContainer = styled.div``;
@@ -100,12 +104,12 @@ const MainListItem = ({ data, onClickedItem }) => {
         <MainItemImageContainer>
           <MainItemImg src={tempImg} />
         </MainItemImageContainer>
-        <div>
+        <MainItemDiv>
           <MainItemUser>{data.userId}</MainItemUser>
           <MainItemTitle>{data.title}</MainItemTitle>
           <MainItemContent>{data.content}</MainItemContent>
           <MainItemDate>{date ? rDate : null}</MainItemDate>
-        </div>
+        </MainItemDiv>
       </Link>
     </MainListItemContainer>
   );
