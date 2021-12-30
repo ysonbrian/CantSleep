@@ -13,9 +13,9 @@ const CreateContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 10px;
+  margin: 20px;
 `;
 const CreateTitleInput = styled.input`
   width: 100%;

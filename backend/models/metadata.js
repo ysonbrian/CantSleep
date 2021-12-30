@@ -1,7 +1,7 @@
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
-    "metadata",
+    'metadata',
     {
       id: {
         autoIncrement: true,
@@ -36,15 +36,15 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       sequelize,
-      tableName: "metadata",
+      tableName: 'metadata',
       timestamps: true,
       updatedAt: false,
       indexes: [
         {
-          name: "PRIMARY",
+          name: 'PRIMARY',
           unique: true,
-          using: "BTREE",
-          fields: [{ name: "id" }],
+          using: 'BTREE',
+          fields: [{ name: 'id' }],
         },
       ],
     }

@@ -18,43 +18,21 @@ import MainLeft from './image/MainLeft.svg';
 import MainRight from './image/MainRight.svg';
 import { createBrowserHistory } from 'history';
 import { getCurrentUser, logout, parseJwt } from './utils/auth';
-import { getAllUsersWList } from './utils/data';
-import { useStore, useData, useLoading } from './utils/store';
+import { getAllUsersWList, getMyNftList } from './utils/data';
+import { useStore, useData, useLoading, useMyNftList } from './utils/store';
 
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import CreateNFT from './components/Create/CreateNFT';
 import Explore from './components/Explore/Explore';
+import Mypage from './components/Mypage/Mypage';
+import Footer from './components/Footer/Footer';
 
 const AppMainContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
-  width: 100%;
   height: 100%;
+  grid-template-rows: 1fr;
   background-color: #f4f4f4;
-`;
-const AppMainLeft = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  width: 100%;
-  img {
-    width: 100%;
-    height: 500px;
-  }
-`;
-
-const AppMainRight = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  width: 100%;
-  img {
-    width: 100%;
-    height: 500px;
-  }
 `;
 
 const AppMainMiddle = styled.div`
@@ -73,6 +51,11 @@ function App() {
   const [isLoading, setIsLoading] = useLoading((state) => [
     state.isLoading,
     state.setIsLoading,
+  ]);
+
+  const [myNftList, setMyNftList] = useMyNftList((state) => [
+    state.myNftList,
+    state.setMyNftList,
   ]);
 
   const getWriting = (data) => {
@@ -116,16 +99,36 @@ function App() {
       setWritingList(orderData);
       setIsLoading(false);
     }
+
     fetchData();
   }, [setIsLoading, setWritingList]);
+
+  useEffect(() => {
+    async function fetchMyData() {
+      const { data } = await getMyNftList(user);
+      if (data) {
+        setMyNftList(data);
+      } else {
+        setMyNftList(null);
+      }
+    }
+    fetchMyData();
+  }, [setMyNftList, user]);
+
+  // const onClickMyList = async () => {
+  //   console.log('gahaha');
+  //   const { data } = await getMyNftList(user);
+  //   if (data) {
+  //     setMyNftList(data);
+  //   } else {
+  //     setMyNftList(null);
+  //   }
+  // };
 
   return (
     <HistoryRouter history={history}>
       <Nav />
       <AppMainContainer>
-        <AppMainLeft>
-          <img src={MainLeft} alt="" />
-        </AppMainLeft>
         {isLoading ? (
           <AppMainMiddle>
             <Loader
@@ -142,7 +145,7 @@ function App() {
               exact
               path="/"
               element={
-                <Main writingList={writingList} onClickedItem={onClickedItem} />
+                <Main writingList={writingList} onClick={onClickedItem} />
               }
             />
             <Route path="/login" element={<Login />} />
@@ -157,12 +160,11 @@ function App() {
               element={<MainClickedPage clickedItem={clickedItem} />}
             />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/mypage" element={<Mypage />} />
           </Routes>
         )}
 
-        <AppMainRight>
-          <img src={MainRight} alt="" />
-        </AppMainRight>
+        <Footer />
       </AppMainContainer>
     </HistoryRouter>
   );

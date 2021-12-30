@@ -8,13 +8,14 @@ const ExploreContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100vh;
+  height: 100%;
 `;
 
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin: 40px;
   padding: 20px;
 `;
 
@@ -24,7 +25,7 @@ const ExploreHeader = styled.div`
 `;
 
 const ItemListContainer = styled.div`
-  margin-top: 20px;
+  margin: 0 100px;
 `;
 
 const Explore = () => {

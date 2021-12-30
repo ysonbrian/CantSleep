@@ -5,13 +5,14 @@ import styled from 'styled-components';
 import { IconContext } from 'react-icons';
 import { MdOutlineImage } from 'react-icons/md';
 import { create } from 'ipfs-http-client';
-import { useLoading } from '../../utils/store';
+import { useLoading, useStore } from '../../utils/store';
 const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 100px;
+  height: 100%;
 `;
 const Title = styled.div`
   line-height: 110%;
@@ -132,6 +133,7 @@ const CreateNFT = () => {
   });
   const [files, setFiles] = useState('');
   const [imgSrc, setImgSrc] = useState('');
+  const [user, setUser] = useStore((state) => [state.user, state.setUser]);
   const [isLoading, setIsLoading] = useLoading((state) => [
     state.isLoading,
     state.setIsLoading,
@@ -151,10 +153,12 @@ const CreateNFT = () => {
     };
     const tokenUri = await ipfs.add(JSON.stringify(metadata));
     const result = {
+      userId: user.username,
       name: metadata.name,
       description: metadata.description,
       imgURI: metadata.imgURI,
       path: tokenUri.path,
+      price: e.target[4].value,
     };
     submitNFT(result);
 
@@ -225,6 +229,15 @@ const CreateNFT = () => {
             type="text"
             id="inputDescription"
             placeholder="선택한 아이템의 정보를 입력 해주세요"
+            required
+          />
+        </InputInfoContainer>
+        <InputInfoContainer>
+          <label htmlFor="inputPrice">가격</label>
+          <InputInfo
+            type="text"
+            id="inputPrice"
+            placeholder="가격을 적어주세요"
             required
           />
         </InputInfoContainer>

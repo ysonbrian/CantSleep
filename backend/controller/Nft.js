@@ -84,6 +84,7 @@ module.exports = {
                 .checkTokenId(tokenUri)
                 .call();
               Metadata.create({
+                userId: metadata.userId,
                 name: metadata.name,
                 description: metadata.description,
                 imgURI: metadata.imgURI,

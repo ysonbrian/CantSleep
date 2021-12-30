@@ -33,3 +33,13 @@ export const getNftList = () => {
     console.log('No NFT data!');
   }
 };
+
+export const getMyNftList = async (user) => {
+  console.log(user);
+  const data = await Axios.get(`${API_URL}/nft/mypage`, { data: user });
+  try {
+    if (data) return data;
+  } catch (error) {
+    console.log('No NFT data!');
+  }
+};
