@@ -19,7 +19,13 @@ import MainRight from './image/MainRight.svg';
 import { createBrowserHistory } from 'history';
 import { getCurrentUser, logout, parseJwt } from './utils/auth';
 import { getAllUsersWList, getMyNftList } from './utils/data';
-import { useStore, useData, useLoading, useMyNftList } from './utils/store';
+import {
+  useStore,
+  useData,
+  useLoading,
+  useMyNftList,
+  useClickedItem,
+} from './utils/store';
 
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -46,7 +52,10 @@ function App() {
     state.writingList,
     state.setWritingList,
   ]);
-  const [clickedItem, setClickedItem] = useState('');
+  const [clickedItem, setClickedItem] = useClickedItem((state) => [
+    state.clickedItem,
+    state.setClickedItem,
+  ]);
   const [user, setUser] = useStore((state) => [state.user, state.setUser]);
   const [isLoading, setIsLoading] = useLoading((state) => [
     state.isLoading,
@@ -115,16 +124,6 @@ function App() {
     fetchMyData();
   }, [setMyNftList, user]);
 
-  // const onClickMyList = async () => {
-  //   console.log('gahaha');
-  //   const { data } = await getMyNftList(user);
-  //   if (data) {
-  //     setMyNftList(data);
-  //   } else {
-  //     setMyNftList(null);
-  //   }
-  // };
-
   return (
     <HistoryRouter history={history}>
       <Nav />
@@ -156,7 +155,7 @@ function App() {
             />
             <Route path="/createNFT" element={<CreateNFT />} />
             <Route
-              path={`/list/${clickedItem.id}`}
+              path={`/list/${clickedItem?.id}`}
               element={<MainClickedPage clickedItem={clickedItem} />}
             />
             <Route path="/explore" element={<Explore />} />

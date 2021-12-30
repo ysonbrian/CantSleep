@@ -1,7 +1,7 @@
 import React from 'react';
 import MainListItem from './MainListItem';
 import styled from 'styled-components';
-
+import { useClickedItem } from '../../utils/store';
 const MainListContainer = styled.div`
   display: grid;
   justify-content: center;
@@ -24,13 +24,19 @@ const MainListContainer = styled.div`
 
 const MainList = ({ writingList, onClickedItem }) => {
   console.log('onClickedItem', onClickedItem);
+
+  const [clickedItem, setClickedItem] = useClickedItem((state) => [
+    state.clickedItem,
+    state.setClickedItem,
+  ]);
+
   const onClickItem = (data) => {
-    onClickedItem(data);
+    setClickedItem(data);
   };
   return (
     <MainListContainer>
       {writingList?.map((data) => (
-        <MainListItem key={data.id} data={data} onClickedItem={onClickItem} />
+        <MainListItem key={data.id} data={data} onClick={onClickItem} />
       ))}
     </MainListContainer>
   );

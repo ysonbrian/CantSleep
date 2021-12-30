@@ -68,8 +68,8 @@ const MainListItem = ({ data, onClickedItem }) => {
   ]);
 
   const onClickItem = (data) => {
+    console.log('haha', data);
     setClickedItem(data);
-    onClickedItem(data);
     navigate(`/list/${data.id}`);
   };
 

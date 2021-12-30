@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Link } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
+import { useClickedItem } from '../../utils/store';
 
 const ClickedItemContainer = styled.div`
   display: flex;
@@ -76,7 +77,12 @@ const ClickedBackButton = styled.button`
   }
 `;
 
-const MainClickedPage = ({ clickedItem }) => {
+const MainClickedPage = ({ data }) => {
+  const [clickedItem, setClickedItem] = useClickedItem((state) => [
+    state.clickedItem,
+    state.setClickedItem,
+  ]);
+
   const info = `# ${clickedItem.title}
   \
   \

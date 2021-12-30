@@ -44,7 +44,7 @@ const Main = ({ writingList, onClickedItem }) => {
         <p>게시글</p>
       </MainHeader>
       <MainListContainer>
-        <MainList writingList={writingList} onClickedItem={onClick} />
+        <MainList writingList={writingList} />
       </MainListContainer>
     </MainContainer>
   );
