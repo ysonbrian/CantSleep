@@ -1,160 +1,155 @@
-
-const { MEDIUMINT } = require("sequelize");
-const Web3 = require("web3");
+const { MEDIUMINT } = require('sequelize');
+const Web3 = require('web3');
 const web3 = new Web3(process.env.networkHost);
-const db = require("../models");
-const { Metadata } = require("../models");
-const {erc20ABI,erc721ABI} = require('../ABI');
+const db = require('../models');
+const { Metadata } = require('../models');
+const { erc20ABI, erc721ABI } = require('../ABI');
 const erc20Abi = erc20ABI();
 const erc721Abi = erc721ABI();
-var erc20Contract = new web3.eth.Contract(erc20Abi,process.env.erc20CA);
-var erc721Contract = new web3.eth.Contract(erc721Abi,process.env.nftCA);
-
+var erc20Contract = new web3.eth.Contract(erc20Abi, process.env.erc20CA);
+var erc721Contract = new web3.eth.Contract(erc721Abi, process.env.nftCA);
 
 //erc20 토큰을 받아서 일단 받아서 nft발행을 시키자 .
-// 1. 토큰을 발행 하면서 nft컨트랙주소를 등록해 줍시다. 
+// 1. 토큰을 발행 하면서 nft컨트랙주소를 등록해 줍시다.
 module.exports = {
-    sendToken : async (req, res)=>{
+  sendToken: async (req, res) => {
+    const sendAccount = process.env.serverAddress;
+    const privateKey = process.env.serverAddress_PK;
+    const receiveAccount = '0x747b089fD11Da5032242818E2728A6444CAe464f';
 
-        const sendAccount = process.env.serverAddress;
-        const privateKey = process.env.serverAddress_PK;
-        const receiveAccount = '0x747b089fD11Da5032242818E2728A6444CAe464f';
-      
-           const nonce = await web3.eth.getTransactionCount(sendAccount,'latest');
-           const data = erc20Contract.methods.mintToken(receiveAccount,process.env.nftCA,web3.utils.toWei('200')).encodeABI();
-           const tx = {
-              'from': sendAccount,
-               'to' : process.env.erc20CA,
-              'nonce': nonce,
-              'gas': 500000,
-              'data':data
-            };
+    const nonce = await web3.eth.getTransactionCount(sendAccount, 'latest');
+    const data = erc20Contract.methods
+      .mintToken(receiveAccount, process.env.nftCA, web3.utils.toWei('200'))
+      .encodeABI();
+    const tx = {
+      from: sendAccount,
+      to: process.env.erc20CA,
+      nonce: nonce,
+      gas: 500000,
+      data: data,
+    };
 
-            const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
-           
-            signPromise.then((signedTx) => {
-             
-                web3.eth.sendSignedTransaction(signedTx.rawTransaction, async function(err, hash) {
-                  if (!err) {
-                   
-                    res.json(
-                        {
-                            'message' : 'mintToken Successed',
-                            "messsage" : hash,
-                        }
-                    );
-                  } else {
-                    console.log(err);
-                    console.log('실패!!')
-                  }
-                });
-              }).catch((err) => {
-                console.log("Promise failed:", err);
-                res.json(
-                    {
-                        message: "Transfer 실패",
-                        
-                    }
-                )
-                
+    const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
+
+    signPromise
+      .then((signedTx) => {
+        web3.eth.sendSignedTransaction(
+          signedTx.rawTransaction,
+          async function (err, hash) {
+            if (!err) {
+              res.json({
+                message: 'mintToken Successed',
+                messsage: hash,
               });
-      
-        
-        },
-        mintNFT : async(req,res,metadata)=>{
-
-            const sendAccount = process.env.serverAddress;
-            const privateKey = process.env.serverAddress_PK;
-            const tokenUri = `https://ipfs.io/ipfs/${metadata.path}`
-            const receiveAccount = '0x747b089fD11Da5032242818E2728A6444CAe464f';
-            const nonce = await web3.eth.getTransactionCount(sendAccount,'latest');
-            const data = erc721Contract.methods.mintNFT(receiveAccount,tokenUri).encodeABI();
-            const tx = {
-               'from': sendAccount,
-                'to' : process.env.nftCA,
-               'nonce': nonce,
-               'gas': 5000000,
-               'data':data
-             };
- 
-             ;
-             
-             const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
-           
-             signPromise.then((signedTx) => {
-              
-                 web3.eth.sendSignedTransaction(signedTx.rawTransaction, async function(err, hash) {
-                   if (!err) {
-                       
-                    const tokenId = await erc721Contract.methods.checkTokenId(tokenUri).call();
-                    Metadata.create({
-                      name : metadata.name,
-                      description : metadata.description,
-                      imgURI : metadata.imgURI,
-                      tokenURI : tokenUri,
-                      tokenId : tokenId
-                    })
-                    .then((result)=>{
-                      console.log('DB store success!');
-                      res.send('success')
-                    })
-                     
-                   } else {
-                     console.log('failed!')
-                   }
-                 });
-               }).catch((err) => {
-                 console.log("Promise failed:", err);
-                 res.send('failed');
-               });
-       
-         
-        },
-        setToken : async ()=>{
-
-          //erc20 CA를  nftCA에서 사용할 수 있도록 연결하는 부분, 즉 민팅전에 먼저 이부분이 실행되어야합니다. 
-
-          const sendAccount = process.env.serverAddress;
-          const privateKey = process.env.serverAddress_PK;
-          
-          const nonce = await web3.eth.getTransactionCount(sendAccount,'latest');
-            const data = erc721Contract.methods.setToken(process.env.erc20CA).encodeABI();
-            const tx = {
-               'from': sendAccount,
-                'to' : process.env.nftCA,
-               'nonce': nonce,
-               'gas': 5000000,
-               'data':data
-             };
-
-            
-
-             const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);           
-             signPromise.then((signedTx) => {
-                 web3.eth.sendSignedTransaction(signedTx.rawTransaction, async function(err, hash) {
-                   if (!err) {
-                       console.log('setToken function successed');
-                   } else {
-                     console.log(err);
-                   }
-                 });
-               }).catch((err) => {
-                 console.log("Promise failed:", err);
-               });
-        },
-
-          ownerOf : async(tokenId)=>{
-          const owner = await erc721Contract.methods.ownerOf('2').call();
-          console.log(owner); 
-        },
-          tokenUri : async(tokenId)=>{
-            const tokenUri = await erc721Contract.methods.tokenURI('3').call();
-            console.log(tokenUri);
-
-            const tokenId1 = await erc721Contract.methods.checkTokenId(tokenUri).call();
-            console.log(tokenId1)
+            } else {
+              console.log(err);
+              console.log('실패!!');
+            }
           }
-      
-            
-        
-    }
+        );
+      })
+      .catch((err) => {
+        console.log('Promise failed:', err);
+        res.json({
+          message: 'Transfer 실패',
+        });
+      });
+  },
+  mintNFT: async (req, res, metadata) => {
+    const sendAccount = process.env.serverAddress;
+    const privateKey = process.env.serverAddress_PK;
+    const tokenUri = `https://ipfs.io/ipfs/${metadata.path}`;
+    const receiveAccount = '0x747b089fD11Da5032242818E2728A6444CAe464f';
+    const nonce = await web3.eth.getTransactionCount(sendAccount, 'latest');
+    const data = erc721Contract.methods
+      .mintNFT(receiveAccount, tokenUri)
+      .encodeABI();
+    const tx = {
+      from: sendAccount,
+      to: process.env.nftCA,
+      nonce: nonce,
+      gas: 5000000,
+      data: data,
+    };
+
+    const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
+
+    signPromise
+      .then((signedTx) => {
+        web3.eth.sendSignedTransaction(
+          signedTx.rawTransaction,
+          async function (err, hash) {
+            if (!err) {
+              const tokenId = await erc721Contract.methods
+                .checkTokenId(tokenUri)
+                .call();
+              Metadata.create({
+                name: metadata.name,
+                description: metadata.description,
+                imgURI: metadata.imgURI,
+                tokenURI: tokenUri,
+                tokenId: tokenId,
+              }).then((result) => {
+                console.log('DB store success!');
+                res.send('success');
+              });
+            } else {
+              console.log('failed!');
+            }
+          }
+        );
+      })
+      .catch((err) => {
+        console.log('Promise failed:', err);
+        res.send('failed');
+      });
+  },
+  setToken: async () => {
+    //erc20 CA를  nftCA에서 사용할 수 있도록 연결하는 부분, 즉 민팅전에 먼저 이부분이 실행되어야합니다.
+
+    const sendAccount = process.env.serverAddress;
+    const privateKey = process.env.serverAddress_PK;
+
+    const nonce = await web3.eth.getTransactionCount(sendAccount, 'latest');
+    const data = erc721Contract.methods
+      .setToken(process.env.erc20CA)
+      .encodeABI();
+    const tx = {
+      from: sendAccount,
+      to: process.env.nftCA,
+      nonce: nonce,
+      gas: 5000000,
+      data: data,
+    };
+
+    const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
+    signPromise
+      .then((signedTx) => {
+        web3.eth.sendSignedTransaction(
+          signedTx.rawTransaction,
+          async function (err, hash) {
+            if (!err) {
+              console.log('setToken function successed');
+            } else {
+              console.log(err);
+            }
+          }
+        );
+      })
+      .catch((err) => {
+        console.log('Promise failed:', err);
+      });
+  },
+
+  ownerOf: async (tokenId) => {
+    const owner = await erc721Contract.methods.ownerOf('2').call();
+    console.log(owner);
+  },
+  tokenUri: async (tokenId) => {
+    const tokenUri = await erc721Contract.methods.tokenURI('3').call();
+    console.log(tokenUri);
+
+    const tokenId1 = await erc721Contract.methods.checkTokenId(tokenUri).call();
+    console.log(tokenId1);
+  },
+};

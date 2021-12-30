@@ -1,6 +1,6 @@
-import { Axios } from "./auth";
+import { Axios } from './auth';
 
-const API_URL = "http://localhost:1234";
+const API_URL = 'http://localhost:1234';
 
 export const getAllUsersWList = () => {
   const data = Axios.get(`${API_URL}`);
@@ -9,7 +9,7 @@ export const getAllUsersWList = () => {
       return data;
     }
   } catch (error) {
-    console.log("No data!");
+    console.log('No data!');
   }
 };
 
@@ -23,4 +23,13 @@ export const submitNFT = async (data) => {
   return await Axios.post(`${API_URL}/nft`, {
     data,
   });
+};
+
+export const getNftList = () => {
+  const data = Axios.get(`${API_URL}/nft/explore`);
+  try {
+    if (data) return data;
+  } catch (error) {
+    console.log('No NFT data!');
+  }
 };
