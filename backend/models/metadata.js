@@ -33,6 +33,10 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING(3000),
         allowNull: true,
       },
+      price: {
+        type: DataTypes.INTEGER(255),
+        allowNull: true,
+      },
     },
     {
       sequelize,

@@ -85,8 +85,8 @@ const Mypage = () => {
           <MyImage />
         </ImageContainer>
         <InfoContainer>
-          <header>{user.username ? user.username : null}</header>
-          <p>{user.address ? user.address : null}</p>
+          <header>{user?.username ? user.username : null}</header>
+          <p>{user?.address ? user.address : null}</p>
         </InfoContainer>
       </MyInfoContainer>
       <hr />

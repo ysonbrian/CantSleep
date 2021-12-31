@@ -112,9 +112,10 @@ function App() {
         setMyNftList(null);
       }
     }
-    fetchMyData();
+    if (user) {
+      fetchMyData();
+    }
   }, [setMyNftList, user]);
-
   // const onClickMyList = async () => {
   //   console.log('gahaha');
   //   const { data } = await getMyNftList(user);

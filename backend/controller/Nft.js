@@ -12,10 +12,10 @@ var erc721Contract = new web3.eth.Contract(erc721Abi, process.env.nftCA);
 //erc20 토큰을 받아서 일단 받아서 nft발행을 시키자 .
 // 1. 토큰을 발행 하면서 nft컨트랙주소를 등록해 줍시다.
 module.exports = {
-  sendToken: async (req, res) => {
+  sendToken: async (req, res,account) => {
     const sendAccount = process.env.serverAddress;
     const privateKey = process.env.serverAddress_PK;
-    const receiveAccount = '0x747b089fD11Da5032242818E2728A6444CAe464f';
+    const receiveAccount = account
 
     const nonce = await web3.eth.getTransactionCount(sendAccount, 'latest');
     const data = erc20Contract.methods
@@ -55,7 +55,9 @@ module.exports = {
         });
       });
   },
-  mintNFT: async (req, res, metadata) => {
+  mintNFT: async (req,res,metadata) => {
+
+   
     const sendAccount = process.env.serverAddress;
     const privateKey = process.env.serverAddress_PK;
     const tokenUri = `https://ipfs.io/ipfs/${metadata.path}`;
@@ -64,6 +66,7 @@ module.exports = {
     const data = erc721Contract.methods
       .mintNFT(receiveAccount, tokenUri)
       .encodeABI();
+      
     const tx = {
       from: sendAccount,
       to: process.env.nftCA,
@@ -73,6 +76,7 @@ module.exports = {
     };
 
     const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
+    let outTokenId = 0;
 
     signPromise
       .then((signedTx) => {
@@ -80,9 +84,14 @@ module.exports = {
           signedTx.rawTransaction,
           async function (err, hash) {
             if (!err) {
+              
               const tokenId = await erc721Contract.methods
                 .checkTokenId(tokenUri)
                 .call();
+
+                console.log(tokenId+"mint");
+                
+               
               Metadata.create({
                 userId: metadata.userId,
                 name: metadata.name,
@@ -90,10 +99,14 @@ module.exports = {
                 imgURI: metadata.imgURI,
                 tokenURI: tokenUri,
                 tokenId: tokenId,
+                price : metadata.price
               }).then((result) => {
+               
+              
                 console.log('DB store success!');
-                res.send('success');
+               
               });
+              
             } else {
               console.log('failed!');
             }
@@ -102,8 +115,9 @@ module.exports = {
       })
       .catch((err) => {
         console.log('Promise failed:', err);
-        res.send('failed');
+       
       });
+     
   },
   setToken: async () => {
     //erc20 CA를  nftCA에서 사용할 수 있도록 연결하는 부분, 즉 민팅전에 먼저 이부분이 실행되어야합니다.
@@ -153,4 +167,123 @@ module.exports = {
     const tokenId1 = await erc721Contract.methods.checkTokenId(tokenUri).call();
     console.log(tokenId1);
   },
+  
+  setForSale : async (req,res,path,price)=>{
+    const sendAccount = process.env.serverAddress;
+    const privateKey = process.env.serverAddress_PK;
+    const tokenUri = `https://ipfs.io/ipfs/${path}`;
+    console.log(tokenUri);
+    const tokenId = await erc721Contract.methods.checkTokenId(tokenUri).call();   
+    console.log(tokenId+"setfor");
+               
+    const data = await erc721Contract.methods.setForSale(tokenId,web3.utils.toWei(price,'ether')).encodeABI();
+    const nonce = await web3.eth.getTransactionCount(sendAccount, 'latest');
+
+    
+    const tx = {
+      from: sendAccount,
+      to: process.env.nftCA,
+      nonce: nonce,
+      gas: 5000000,
+      data: data,
+    };
+    console.log(price);
+
+    const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
+    signPromise
+      .then((signedTx) => {
+        web3.eth.sendSignedTransaction(
+          signedTx.rawTransaction,
+          async function (err, hash) {
+            if (!err) {
+              res.send('successed!')
+              console.log('setforSale function successed');
+            } else {
+              console.log(err);
+            }
+          }
+        );
+      })
+      .catch((err) => {
+        console.log('Promise failed:', err);
+      });
+  },
+  nftPrice :async (req,res,tokenId)=>{
+  const tokenPrice =  await erc721Contract.methods.tokenPrice(tokenId).call();
+  console.log(tokenPrice);
+  },
+  setApproveForAll : async()=>{
+    const sendAccount = process.env.serverAddress;
+    const privateKey = process.env.serverAddress_PK;
+    data = await erc721Contract.methods.setApprovalForAll(process.env.nftCA,true).encodeABI();
+    const nonce = await web3.eth.getTransactionCount(sendAccount, 'latest');
+
+    
+    const tx = {
+      from: sendAccount,
+      to: process.env.nftCA,
+      nonce: nonce,
+      gas: 5000000,
+      data: data,
+    };
+
+    const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
+    signPromise
+      .then((signedTx) => {
+        web3.eth.sendSignedTransaction(
+          signedTx.rawTransaction,
+          async function (err, hash) {
+            if (!err) {
+              console.log('setApproveForAll function successed');
+            } else {
+              console.log(err);
+            }
+          }
+        );
+      })
+      .catch((err) => {
+        console.log('Promise failed:', err);
+      });
+  },
+
+  buyNft : async(req,res,tokenId,buyer,userId)=>{
+    const sendAccount = process.env.serverAddress;
+    const privateKey = process.env.serverAddress_PK;
+    data = await erc721Contract.methods.purchaseToken(tokenId,buyer).encodeABI();
+    const nonce = await web3.eth.getTransactionCount(sendAccount, 'latest');
+
+    
+    const tx = {
+      from: sendAccount,
+      to: process.env.nftCA,
+      nonce: nonce,
+      gas: 5000000,
+      data: data,
+    };
+
+    const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
+    signPromise
+      .then((signedTx) => {
+        web3.eth.sendSignedTransaction(
+          signedTx.rawTransaction,
+          async function (err, hash) {
+            if (!err) {
+              Metadata.update({
+                userId: userId
+              },{where :  {tokenId : tokenId}})
+              .then((result) => {
+                console.log('success buy nft');
+              });
+              
+              
+            } else {
+              console.log(err);
+            }
+          }
+        );
+      })
+      .catch((err) => {
+        console.log('Promise failed:', err);
+      });
+  }
 };
