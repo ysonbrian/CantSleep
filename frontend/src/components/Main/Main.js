@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MainList from './MainList';
 import styled from 'styled-components';
-
+import { useRandomImages } from '../../utils/store';
 const MainContainer = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -35,16 +35,19 @@ const MainHeader = styled.div`
 `;
 
 const Main = ({ writingList, onClickedItem }) => {
+  const [img, setImg] = useRandomImages((state) => [state.img, state.setImg]);
+
   const onClick = (data) => {
     onClickedItem(data);
   };
+
   return (
     <MainContainer>
       <MainHeader>
         <p>게시글</p>
       </MainHeader>
       <MainListContainer>
-        <MainList writingList={writingList} />
+        <MainList writingList={writingList} img={img} />
       </MainListContainer>
     </MainContainer>
   );

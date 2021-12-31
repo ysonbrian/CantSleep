@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import tempImg from '../../image/MainRight.jpg';
@@ -60,8 +60,9 @@ const MainItemDiv = styled.div`
 
 const MainItemImageContainer = styled.div``;
 
-const MainListItem = ({ data, onClickedItem }) => {
+const MainListItem = ({ data, onClickedItem, img }) => {
   let navigate = useNavigate();
+  console.log('haha', img);
   const [clickedItem, setClickedItem] = useClickedItem((state) => [
     state.clickedItem,
     state.setClickedItem,
@@ -102,7 +103,7 @@ const MainListItem = ({ data, onClickedItem }) => {
         }}
       >
         <MainItemImageContainer>
-          <MainItemImg src={tempImg} />
+          <MainItemImg src={img ? img : null} />
         </MainItemImageContainer>
         <MainItemDiv>
           <MainItemUser>{data.userId}</MainItemUser>

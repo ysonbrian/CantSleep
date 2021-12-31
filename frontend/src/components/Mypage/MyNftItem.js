@@ -9,6 +9,8 @@ const MyNftItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  height: 100%;
+
   border: 1px solid rgb(206, 202, 202);
   border-radius: 10px;
   box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
@@ -22,10 +24,22 @@ const MyNftItemContainer = styled.div`
   }
 `;
 
-const Image = styled.img`
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: contain;
   width: 100%;
-  height: 100%;
-  border-radius: 10px 10px 0 0;
+  height: 400px;
+  /* padding: 5px; */
+`;
+const Image = styled.img`
+  /* width: 100%;
+  height: 100%; */
+  /* max-height: 278px; */
+  max-width: 100%;
+  max-height: 100%;
+  /* border-radius: 10px 10px 0 0; */
 `;
 
 const ItemDiscriptionDiv = styled.div`
@@ -67,23 +81,26 @@ const ItemIPFSInfo = styled.a`
 const MyNftItem = ({ data }) => {
   return (
     <MyNftItemContainer>
-      <Image src={data.imgURI ? data.imgURI : testImg} />
+      <ImageContainer>
+        <Image src={data?.imgURI ? data?.imgURI : testImg} />
+      </ImageContainer>
+
       <ItemDiscriptionDiv>
         <ItemNameDisDiv>
-          <div style={{ color: '#7B848C' }}>{data.name}</div>
-          <div>{data.description}</div>
+          <div style={{ color: '#7B848C' }}>{data?.name}</div>
+          <div>{data?.description}</div>
         </ItemNameDisDiv>
       </ItemDiscriptionDiv>
       <hr />
       <ItemIPFSContainer>
         <ItemIPFSInfo
-          href={data.tokenURI ? data.tokenURI : null}
+          href={data?.tokenURI ? data?.tokenURI : null}
           target="_blank"
         >
           <BiCube />
           메타데이터
         </ItemIPFSInfo>
-        <ItemIPFSInfo href={data.imgURI ? data.imgURI : null} target="_blank">
+        <ItemIPFSInfo href={data?.imgURI ? data?.imgURI : null} target="_blank">
           <AiOutlineFileSearch />
           IPFS
         </ItemIPFSInfo>

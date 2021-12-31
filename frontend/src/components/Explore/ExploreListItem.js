@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IconContext } from 'react-icons';
 import { FaEthereum } from 'react-icons/fa';
 import { BiCube } from 'react-icons/bi';
 import { AiOutlineFileSearch } from 'react-icons/ai';

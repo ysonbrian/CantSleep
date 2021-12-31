@@ -46,7 +46,7 @@ const Explore = () => {
     }
     fetchData();
   }, []);
-
+  console.log(nftList);
   return (
     <ExploreContainer>
       <HeaderContainer>

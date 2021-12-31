@@ -2,6 +2,8 @@ import React from 'react';
 import MainListItem from './MainListItem';
 import styled from 'styled-components';
 import { useClickedItem } from '../../utils/store';
+import { createApi } from 'unsplash-js';
+
 const MainListContainer = styled.div`
   display: grid;
   justify-content: center;
@@ -22,7 +24,7 @@ const MainListContainer = styled.div`
   }
 `;
 
-const MainList = ({ writingList, onClickedItem }) => {
+const MainList = ({ writingList, onClickedItem, img }) => {
   console.log('onClickedItem', onClickedItem);
 
   const [clickedItem, setClickedItem] = useClickedItem((state) => [
@@ -33,11 +35,21 @@ const MainList = ({ writingList, onClickedItem }) => {
   const onClickItem = (data) => {
     setClickedItem(data);
   };
+  const unsplash = createApi({
+    accessKey: 'JuOn-1RPN6tAIe9HrVn2EvBYOpv6I_AhI1-60QAl9n8',
+  });
   return (
     <MainListContainer>
-      {writingList?.map((data) => (
-        <MainListItem key={data.id} data={data} onClick={onClickItem} />
-      ))}
+      {writingList?.map((data) => {
+        return (
+          <MainListItem
+            key={data?.id}
+            data={data}
+            img={img}
+            onClick={onClickItem}
+          />
+        );
+      })}
     </MainListContainer>
   );
 };

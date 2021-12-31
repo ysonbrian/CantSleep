@@ -6,7 +6,6 @@ const MyNftListContainer = styled.div`
   display: grid;
   justify-content: center;
   align-items: center;
-  height: 100%;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   @media (max-width: 1200px) {

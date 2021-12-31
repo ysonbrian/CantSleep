@@ -143,7 +143,7 @@ const CreateNFT = () => {
     e.preventDefault();
     //ipfs에 이미지 업로드하고 hash값 리턴
     setIsLoading(true);
-    console.log(isLoading);
+    console.log('user', user);
     const imgURI = await ipfs.add(files);
 
     const metadata = {
@@ -160,10 +160,11 @@ const CreateNFT = () => {
       path: tokenUri.path,
       price: e.target[4].value,
     };
-    submitNFT(result);
+    console.log('result', result);
+    // submitNFT(result);
 
-    navigate('/');
-    window.location.reload(false);
+    // navigate('/');
+    // window.location.reload(false);
   };
 
   const onClickXButton = () => {

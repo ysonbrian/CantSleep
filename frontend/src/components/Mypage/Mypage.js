@@ -7,6 +7,7 @@ const MyPageContainer = styled.div`
   display: grid;
   grid-template-rows: 1fr;
   margin: 10px;
+  height: 100%;
 `;
 const MyInfoContainer = styled.div`
   margin: 20px;
@@ -85,8 +86,8 @@ const Mypage = () => {
           <MyImage />
         </ImageContainer>
         <InfoContainer>
-          <header>{user.username ? user.username : null}</header>
-          <p>{user.address ? user.address : null}</p>
+          <header>{user?.username ? user.username : null}</header>
+          <p>{user?.address ? user.address : null}</p>
         </InfoContainer>
       </MyInfoContainer>
       <hr />

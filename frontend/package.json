@@ -21,6 +21,7 @@
     "react-spinners": "^0.11.0",
     "remark-gfm": "^3.0.1",
     "styled-components": "^5.3.3",
+    "unsplash-js": "^7.0.15",
     "web-vitals": "^2.1.2",
     "zustand": "^3.6.7"
   },

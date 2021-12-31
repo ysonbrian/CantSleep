@@ -12,13 +12,15 @@ const {
 } = require('../controller/Nft');
 
 router.post('/', async (req, res, next) => {
-  const { userId, name, description, imgURI, path } = req.body.data;
+  const { userName, name, description, imgURI, path, price } = req.body.data;
+  console.log('hahahahahahha', req);
   const data = {
-    userId: userId,
+    userId: userName,
     name: name,
     description: description,
     imgURI: imgURI,
     path: path,
+    price: price,
   };
   setToken();
   setTimeout(async () => {
@@ -45,14 +47,14 @@ router.get('/explore', (req, res, next) => {
     });
 });
 
-router.get('/mypage', (req, res, next) => {
+router.post('/mypage', (req, res, next) => {
+  console.log(req);
   Metadata.findAll({
     where: {
       userId: req.userName,
     },
   })
     .then((data) => {
-      console.log(data);
       if (data !== []) return res.json(data);
       else return res.json(null);
     })

@@ -31,3 +31,8 @@ export const useMyNftList = create((set) => ({
   myNftList: null,
   setMyNftList: (myNftList) => set({ myNftList }),
 }));
+
+export const useRandomImages = create((set) => ({
+  img: null,
+  setImg: (img) => set({ img }),
+}));

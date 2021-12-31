@@ -25,7 +25,9 @@ import {
   useLoading,
   useMyNftList,
   useClickedItem,
+  useRandomImages,
 } from './utils/store';
+import { createApi } from 'unsplash-js';
 
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -66,6 +68,8 @@ function App() {
     state.myNftList,
     state.setMyNftList,
   ]);
+
+  const [img, setImg] = useRandomImages((state) => [state.img, state.setImg]);
 
   const getWriting = (data) => {
     setWritingList((prev) => {
@@ -109,6 +113,7 @@ function App() {
       setIsLoading(false);
     }
 
+    async function fetchImage() {}
     fetchData();
   }, [setIsLoading, setWritingList]);
 
@@ -121,8 +126,23 @@ function App() {
         setMyNftList(null);
       }
     }
-    fetchMyData();
+    if (user) {
+      fetchMyData();
+    }
   }, [setMyNftList, user]);
+
+  // useEffect(() => {
+  //   async function fetchImage() {
+  //     const unsplash = createApi({
+  //       accessKey: 'JuOn-1RPN6tAIe9HrVn2EvBYOpv6I_AhI1-60QAl9n8',
+  //     });
+  //     const data = await unsplash.photos.getRandom({
+  //       count: 30,
+  //     });
+  //     console.log(data.response);
+  //     setImg(data.response);
+  //   }
+  // }, [setImg]);
 
   return (
     <HistoryRouter history={history}>
@@ -162,7 +182,6 @@ function App() {
             <Route path="/mypage" element={<Mypage />} />
           </Routes>
         )}
-
         <Footer />
       </AppMainContainer>
     </HistoryRouter>

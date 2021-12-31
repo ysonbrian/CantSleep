@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Open+Sans&family=Roboto&display=swap');
-* {
+* html {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
-html {
+/* html {
   background-color: #f4f4f4;
   width: 100%;
   height: 100%;
+} */
+
+body {
+  margin: 0;
 }
