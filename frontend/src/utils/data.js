@@ -35,7 +35,7 @@ export const getNftList = () => {
 };
 
 export const getMyNftList = async (user) => {
-  console.log('hahahahah', user);
+  console.log(user);
   const data = await Axios.post(`${API_URL}/nft/mypage`, { data: user });
   try {
     if (data) return data;

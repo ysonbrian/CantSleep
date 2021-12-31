@@ -6,6 +6,7 @@ import { AiOutlineFileSearch } from 'react-icons/ai';
 import testImg from '../../image/MainLeft.jpg';
 
 const MyNftItemContainer = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
   cursor: pointer;

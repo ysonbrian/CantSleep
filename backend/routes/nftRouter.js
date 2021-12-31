@@ -9,26 +9,50 @@ const {
   setToken,
   ownerOf,
   tokenUri,
+  nftPrice,
+  setForSale,
+  setApproveForAll,
+  buyNft
 } = require('../controller/Nft');
 
-router.post('/', async (req, res, next) => {
-  const { userName, name, description, imgURI, path, price } = req.body.data;
-  console.log('hahahahahahha', req);
+
+router.post('/',async(req, res, next) => {
+  const { userId, name, description, imgURI, path, price } = req.body.data;
   const data = {
     userId: userName,
     name: name,
     description: description,
     imgURI: imgURI,
     path: path,
-    price: price,
+    price: price
   };
-  setToken();
-  setTimeout(async () => {
+
+    setToken();
+     setTimeout(() => {
     mintNFT(req, res, data);
-  }, 1000);
+     }, 600);
+     setTimeout(() => {
+      setApproveForAll();
+     }, 1000);
+     setTimeout(() => {
+      setForSale(req,res,path,price)
+     }, 1500);
 });
 
-router.get('/', sendToken);
+router.post('/sendToken',(req,res)=>{
+  const account = req.body.account
+ sendToken(req,res,account)
+});
+router.post('/nftPrice',(req,res)=>{
+  const tokenId = req.body.tokenId;
+  nftPrice(req,res,tokenId)
+});
+router.post('/buyNft',(req,res)=>{
+  const tokenId = req.body.tokenId;
+  const buyer = req.body.buyer;
+  const userId = req.body.userId
+  buyNft(req,res,tokenId,buyer,userId)
+})
 
 router.get('/owner', (req, res) => {
   ownerOf();
@@ -48,13 +72,22 @@ router.get('/explore', (req, res, next) => {
 });
 
 router.post('/mypage', (req, res, next) => {
+<<<<<<< HEAD
   console.log(req);
+=======
+
+
+>>>>>>> 694bdb140e35333da08b70d8dcaad6dc554221aa
   Metadata.findAll({
     where: {
-      userId: req.userName,
+      userId: req.body.data.username,
     },
   })
     .then((data) => {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 694bdb140e35333da08b70d8dcaad6dc554221aa
       if (data !== []) return res.json(data);
       else return res.json(null);
     })

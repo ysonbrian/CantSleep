@@ -131,16 +131,13 @@ function App() {
     }
   }, [setMyNftList, user]);
 
-  // useEffect(() => {
-  //   async function fetchImage() {
-  //     const unsplash = createApi({
-  //       accessKey: 'JuOn-1RPN6tAIe9HrVn2EvBYOpv6I_AhI1-60QAl9n8',
-  //     });
-  //     const data = await unsplash.photos.getRandom({
-  //       count: 30,
-  //     });
-  //     console.log(data.response);
-  //     setImg(data.response);
+  // const onClickMyList = async () => {
+  //   console.log('gahaha');
+  //   const { data } = await getMyNftList(user);
+  //   if (data) {
+  //     setMyNftList(data);
+  //   } else {
+  //     setMyNftList(null);
   //   }
   // }, [setImg]);
 

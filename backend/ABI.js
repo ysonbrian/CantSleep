@@ -768,6 +768,26 @@ module.exports = {
           "inputs": [
             {
               "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "tokenPrice",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "constant": true
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
               "name": "tokenId",
               "type": "uint256"
             }
@@ -882,6 +902,42 @@ module.exports = {
           "stateMutability": "view",
           "type": "function",
           "constant": true
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_tokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_price",
+              "type": "uint256"
+            }
+          ],
+          "name": "setForSale",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_tokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "buyer",
+              "type": "address"
+            }
+          ],
+          "name": "purchaseToken",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
         }
       ]
     )
