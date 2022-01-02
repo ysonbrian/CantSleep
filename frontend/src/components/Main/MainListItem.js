@@ -102,7 +102,7 @@ const MainListItem = ({ data, onClickedItem }) => {
         }}
       >
         <MainItemImageContainer>
-          <MainItemImg src={tempImg} />
+          <MainItemImg src={`https://picsum.photos/id/${data.id}/200/300`} />
         </MainItemImageContainer>
         <MainItemDiv>
           <MainItemUser>{data.userId}</MainItemUser>
