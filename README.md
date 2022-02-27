@@ -1,4 +1,4 @@
-# 인센티브 기반 토론 시스템을 갖춘 커뮤니티 사이트 개발
+# Web 2.0 인센티브 기반 토론 시스템을 갖춘 커뮤니티 사이트
 
 ![main](https://blockchain-crypto313.s3.ap-northeast-2.amazonaws.com/blog-image/labPicture/lab2Main.png)
 
